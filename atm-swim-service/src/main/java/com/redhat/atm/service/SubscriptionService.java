@@ -25,7 +25,7 @@ public class SubscriptionService {
     }
 
     @Transactional
-    public Subscription subscribe(String subscriber, List<TopicType> topicTypes) throws Exception {
+    public Subscription subscribe(String subscriber, List<TopicType> topicTypes, String roleName) throws Exception {
         Subscription subscription = new Subscription();
         subscription.setSubscriber(subscriber);
         UUID uuid = UUID.randomUUID();
@@ -34,6 +34,7 @@ public class SubscriptionService {
         subscription.setExpiresAt(subscription.getCreatedAt().plusDays(1));
         subscription.setTopicsOfInterest(topicTypes);
         subscription.setResponseQueue(uuid.toString());
+        subscription.setSubscriberRoleName(roleName);
 
         Subscription sub = subscriptionRepository.save(subscription);
         messageService.updateSubscriptions();

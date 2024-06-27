@@ -11,3 +11,46 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: swim-db-secret
+                  key: database-user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: swim-db-secret
+                  key: database-password
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: swim-db-secret
+                  key: database-name
+            - name: DB_HOST
+              value: postgres-swim
+            - name: JMS_RECEIVER_HOST
+              value: artemis-hdls-svc.nav-portugal.svc.cluster.local
+            - name: JMS_RECEIVER_USER
+              valueFrom:
+                secretKeyRef:
+                  name: artemis-credentials-secret
+                  key: AMQ_USER
+            - name: JMS_RECEIVER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: artemis-credentials-secret
+                  key: AMQ_PASSWORD
+            - name: JMS_PUBLISHER_HOST
+              value: artemis-swim-hdls-svc.nav-portugal.svc.cluster.local
+            - name: JMS_PUBLISHER_USER
+              valueFrom:
+                secretKeyRef:
+                  name: artemis-swim-credentials-secret
+                  key: AMQ_USER
+            - name: JMS_PUBLISHER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: artemis-swim-credentials-secret
+                  key: AMQ_PASSWORD
+
+

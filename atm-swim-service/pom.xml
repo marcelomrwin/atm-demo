@@ -69,11 +69,17 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!-- Test -->
@@ -96,12 +102,12 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>4.12.0</version>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.squareup.okhttp3</groupId>-->
+<!--            <artifactId>okhttp</artifactId>-->
+<!--            <version>4.12.0</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
 
     </dependencies>
 
@@ -159,8 +165,9 @@
                     <artifactId>atm-amq-client-openshift</artifactId>
                 </dependency>
                 <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-actuator</artifactId>
+                    <groupId>io.kubernetes</groupId>
+                    <artifactId>client-java</artifactId>
+                    <version>${kubernetes.api.version}</version>
                 </dependency>
             </dependencies>
             <build>

@@ -24,15 +24,14 @@ public class SecurityRolesConfigurationProducer {
     private String securityRoleConfigName;
     @Value("${application.security.roles.config.admin.role.name}")
     private String adminRoleName;
-    @Value("${application.security.roles.config.role.name.prefix}")
-    private String roleNamePrefix;
 
     public V1Secret updateSecurityRoles(List<Subscription> subscriptions, CoreV1Api coreV1Api, String namespace) throws IOException, ApiException {
+        log.info("Updating security roles");
         Properties properties = new PropertiesWithoutComments();
         for (Subscription subscription : subscriptions) {
-            properties.put("securityRoles." + subscription.getResponseQueue() + "." + subscription.getSubscriberRoleName() + ".consume", true);
-            properties.put("securityRoles." + subscription.getResponseQueue() + "."+adminRoleName+".send", true);
-            properties.put("securityRoles." + subscription.getResponseQueue() + "."+adminRoleName+".manage", true);
+            properties.put("securityRoles." + subscription.getResponseQueue() + "." + subscription.getSubscriberRoleName() + ".consume", Boolean.TRUE.toString());
+            properties.put("securityRoles." + subscription.getResponseQueue() + "."+adminRoleName+".send", Boolean.TRUE.toString());
+            properties.put("securityRoles." + subscription.getResponseQueue() + "."+adminRoleName+".manage", Boolean.TRUE.toString());
         }
 
         V1Secret secret = OpenshiftUtil.getBaseSecret(secretName);

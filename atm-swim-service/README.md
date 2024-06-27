@@ -34,3 +34,28 @@ curl -X POST --header "Content-Type: application/json" -k -u artemis:artemis htt
 
 Quando cadastrar o usuário no keycloak criar uma role no cliente e associar o usuário a esta role. Esta role deve ser informada ao cliente na resposta. A criação de security role usa este valor, que deve ser informado no pedido de subscrição. 
 Uma alternativa é criar uma custom property e adicionar ao userinfo do usuário, assim, no momento da criação do mesmo esta informação é extraída diretamente do token.
+
+
+oc -n nav-portugal create secret generic swim-db-secret --dry-run=client -o yaml --from-literal=database-user=swimuser --from-literal=database-password=swimpassword --from-literal=database-name=swim
+
+### Generate Resources
+```shell
+mvn clean package oc:resource -DskipTests -Popenshift
+```
+
+### Deploy on Openshift
+```shell
+mvn clean package oc:build oc:resource oc:apply -Popenshift -DskipTests
+```
+
+### Undeploy on Openshift
+```shell
+mvn oc:undeploy -Popenshift
+```
+
+### Ping the service
+```shell
+curl -X GET http://atm-swim-service-nav-portugal.apps.ocp4.masales.cloud/api/subscription/v1/ping
+
+curl -X POST --header "Content-Type: application/json" -k http://atm-swim-service-nav-portugal.apps.ocp4.masales.cloud/api/subscription/v1/user/subscribe -d '{"topicTypes":["ARRIVAL_SEQUENCE_DATA_A"]}'
+```

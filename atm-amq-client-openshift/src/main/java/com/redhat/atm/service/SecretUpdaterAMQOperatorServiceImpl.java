@@ -1,13 +1,10 @@
 package com.redhat.atm.service;
 
-
 import com.redhat.atm.model.Subscription;
 import com.redhat.atm.repository.SubscriptionRepository;
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.Configuration;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
-import io.kubernetes.client.openapi.models.V1ObjectMeta;
-import io.kubernetes.client.openapi.models.V1Secret;
 import io.kubernetes.client.util.Config;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -48,9 +45,15 @@ public class SecretUpdaterAMQOperatorServiceImpl implements MessageService {
 
     @Override
     public void updateSubscriptions()throws Exception {
+        log.info("Retrieving all subscriptions");
         List<Subscription> subscriptions = subscriptionRepository.findAll();
+        log.info("Updating the secret with {} subscriptions",subscriptions.size());
+        log.info("Updating the secret for addresses and queues");
         addressConfigurationProducer.updateAddressConfig(subscriptions, coreV1Api, namespace);
+        log.info("Secrets for addresses and queues were updated successfully");
+        log.info("Updating security rules for queues");
         securityRolesConfigurationProducer.updateSecurityRoles(subscriptions,coreV1Api,namespace);
+        log.info("Security rules for queues have been updated successfully");
     }
 
 }

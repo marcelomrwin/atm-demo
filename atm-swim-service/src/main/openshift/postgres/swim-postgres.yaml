@@ -1,0 +1,80 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgresql-swim
+  namespace: nav-portugal
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: managed-nfs-storage
+  volumeMode: Filesystem
+---
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: postgresql-swim
+  namespace: nav-portugal
+spec:
+  serviceName: postgresql-swim-service
+  selector:
+    matchLabels:
+      app: postgresql-swim
+  template:
+    metadata:
+      labels:
+        app: postgresql-swim
+    spec:
+      volumes:
+        - name: postgresql-data
+          persistentVolumeClaim:
+            claimName: postgresql-swim
+      containers:
+        - name: postgresql-swim
+          image: registry.redhat.io/rhel9/postgresql-16:latest
+          resources:
+            limits:
+              memory: 512Mi
+          env:
+            - name: POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: swim-db-secret
+                  key: database-user
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: swim-db-secret
+                  key: database-password
+            - name: POSTGRESQL_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: swim-db-secret
+                  key: database-password
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: swim-db-secret
+                  key: database-name
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: postgresql-data
+              mountPath: /var/lib/pgsql/data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-swim
+  namespace: nav-portugal
+spec:
+  selector:
+    app: postgresql-swim
+  type: LoadBalancer
+  ports:
+    - port: 5432
+      targetPort: 5432
