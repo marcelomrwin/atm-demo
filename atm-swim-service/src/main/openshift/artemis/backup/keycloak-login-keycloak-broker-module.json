@@ -1,0 +1,14 @@
+{
+  "realm": "nav-portugal",
+  "auth-server-url": "https://rhbk-nav-portugal.apps.ocp4.masales.cloud",
+  "ssl-required": "external",
+  "credentials": {
+    "secret": "G2I810Drfp1CtnfuJJLGZPtoAErcoVuf"
+  },
+  "resource": "amq-broker",
+  "use-resource-role-mappings": true,
+  "principal-attribute": "preferred_username",
+  "verify-token-audience": true,
+  "enable-basic-auth": true,
+  "confidential-port": 0
+}

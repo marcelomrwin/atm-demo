@@ -1,0 +1,67 @@
+volumes:
+  artemis-data: { }
+  swim-data: { }
+  pgadmin-data: {}
+
+services:
+
+#  activemq:
+#    image: apache/activemq-artemis:latest-alpine
+#    container_name: activemq
+#    ports:
+#      - 61616:61616
+#      - 8161:8161
+#    environment:
+#      TZ: UTC
+#      ARTEMIS_USER: artemis
+#      ARTEMIS_PASSWORD: artemis
+#      ANONYMOUS_LOGIN: false
+#    volumes:
+#      - activemq-data:/var/lib/artemis-instance
+#    restart: unless-stopped
+
+  artemis:
+    image: registry.redhat.io/amq7/amq-broker-rhel8:7.12.0-9
+#    image: registry.redhat.io/amq7/amq-broker:7.7
+    container_name: artemis
+    ports:
+      - 61616:61616
+      - 8161:8161
+    environment:
+      TZ: UTC
+      AMQ_PASSWORD: artemis
+      AMQ_USER: artemis
+      AMQ_REQUIRE_LOGIN: false
+    volumes:
+      - artemis-data:/var/lib/artemis-instance
+    restart: unless-stopped
+
+  postgres-swim:
+    image: docker.io/library/postgres:16
+    container_name: postgres-swim
+    hostname: postgres-swim
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    volumes:
+      - swim-data:/var/lib/postgresql/data
+    environment:
+      TZ: UTC
+      POSTGRES_DB: swim
+      POSTGRES_USER: swim
+      POSTGRES_PASSWORD: swim
+
+  pgadmin4:
+    image: dpage/pgadmin4:8
+    container_name: pgadmin4
+    restart: always
+    ports:
+      - 9980:80
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    environment:
+      TZ: UTC
+      PGADMIN_DEFAULT_PASSWORD: P@ssw0rd1!
+      PGADMIN_DEFAULT_EMAIL: masales@redhat.com
+      PGADMIN_LISTEN_ADDRESS: 0.0.0.0
+      GUNICORN_ACCESS_LOGFILE: /dev/null

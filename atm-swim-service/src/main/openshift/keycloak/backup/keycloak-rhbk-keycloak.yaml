@@ -1,0 +1,131 @@
+﻿apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"k8s.keycloak.org/v2alpha1","kind":"Keycloak","metadata":{"annotations":{},"labels":{"app":"rhbk"},"name":"rhbk-keycloak","namespace":"nav-portugal"},"spec":{"additionalOptions":[{"name":"proxy","value":"edge"},{"name":"hostname-debug","value":"true"},{"name":"hostname-strict-https","value":"false"}],"db":{"host":"postgresql","passwordSecret":{"key":"database-password","name":"rhbk-db-secret"},"url":"jdbc:postgresql://postgres-rhbk.nav-portugal.svc.cluster.local:5432/keycloak","usernameSecret":{"key":"database-user","name":"rhbk-db-secret"},"vendor":"postgres"},"hostname":{"hostname":"rhbk-nav-portugal.apps.ocp4.masales.cloud","strict":false,"strictBackchannel":false},"http":{"httpEnabled":true,"tlsSecret":"rhbk-tls-secret"},"instances":1,"transaction":{"xaEnabled":false}}}
+  resourceVersion: '128675903'
+  name: rhbk-keycloak
+  uid: 4ecd545e-ec82-4797-994e-392b4e50d32c
+  creationTimestamp: '2024-06-24T21:35:04Z'
+  generation: 2
+  managedFields:
+    - apiVersion: k8s.keycloak.org/v2alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+        'f:spec':
+          .: {}
+          'f:additionalOptions': {}
+          'f:db':
+            .: {}
+            'f:host': {}
+            'f:passwordSecret':
+              .: {}
+              'f:key': {}
+              'f:name': {}
+            'f:url': {}
+            'f:usernameSecret':
+              .: {}
+              'f:key': {}
+              'f:name': {}
+            'f:vendor': {}
+          'f:hostname':
+            .: {}
+            'f:hostname': {}
+            'f:strict': {}
+            'f:strictBackchannel': {}
+          'f:http':
+            .: {}
+            'f:httpEnabled': {}
+            'f:tlsSecret': {}
+          'f:instances': {}
+          'f:transaction':
+            .: {}
+            'f:xaEnabled': {}
+      manager: kubectl-client-side-apply
+      operation: Update
+      time: '2024-06-24T21:35:04Z'
+    - apiVersion: k8s.keycloak.org/v2alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:features':
+            .: {}
+            'f:enabled': {}
+      manager: Mozilla
+      operation: Update
+      time: '2024-06-24T21:45:32Z'
+    - apiVersion: k8s.keycloak.org/v2alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          .: {}
+          'f:conditions': {}
+          'f:instances': {}
+          'f:observedGeneration': {}
+          'f:selector': {}
+      manager: fabric8-kubernetes-client
+      operation: Update
+      subresource: status
+      time: '2024-06-24T21:45:45Z'
+  namespace: nav-portugal
+  labels:
+    app: rhbk
+spec:
+  additionalOptions:
+    - name: proxy
+      value: edge
+    - name: hostname-debug
+      value: 'true'
+    - name: hostname-strict-https
+      value: 'false'
+  db:
+    host: postgresql
+    passwordSecret:
+      key: database-password
+      name: rhbk-db-secret
+    url: 'jdbc:postgresql://postgres-rhbk.nav-portugal.svc.cluster.local:5432/keycloak'
+    usernameSecret:
+      key: database-user
+      name: rhbk-db-secret
+    vendor: postgres
+  features:
+    enabled:
+      - preview
+  hostname:
+    hostname: rhbk-nav-portugal.apps.ocp4.masales.cloud
+    strict: false
+    strictBackchannel: false
+  http:
+    httpEnabled: true
+    tlsSecret: rhbk-tls-secret
+  instances: 1
+  transaction:
+    xaEnabled: false
+status:
+  conditions:
+    - lastTransitionTime: '2024-06-24T21:45:45.219565510Z'
+      message: ''
+      observedGeneration: 2
+      status: 'True'
+      type: Ready
+    - lastTransitionTime: '2024-06-24T21:35:05.115754464Z'
+      message: ''
+      observedGeneration: 2
+      status: 'False'
+      type: HasErrors
+    - lastTransitionTime: '2024-06-24T21:45:45.219565510Z'
+      message: ''
+      observedGeneration: 2
+      status: 'False'
+      type: RollingUpdate
+  instances: 1
+  observedGeneration: 2
+  selector: 'app=keycloak,app.kubernetes.io/managed-by=keycloak-operator,app.kubernetes.io/instance=rhbk-keycloak'

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="urn:x-eurocae-example:service:aman:pub" xmlns:aman="urn:x-eurocae-example:service:aman:pub" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <xs:element name="arrivalSequence">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="aman:messageMeta"/>
+        <xs:element maxOccurs="unbounded" ref="aman:entry"/>
+      </xs:sequence>
+      <xs:attribute name="topic" type="aman:TopicType" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="messageMeta">
+    <xs:complexType>
+      <xs:attribute name="creationTime" use="required" type="aman:TimestampType"/>
+      <xs:attribute name="isFirstAfterOutage" use="required" type="xs:boolean"/>
+      <xs:attribute name="managedAerodrome" use="required" type="aman:icaoAerodromeType"/>
+      <xs:attribute name="publicationTime" use="required" type="aman:TimestampType"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="entry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="aman:flightID"/>
+        <xs:element maxOccurs="unbounded" ref="aman:point"/>
+        <xs:element ref="aman:atldt"/>
+        <xs:element ref="aman:assignedArrRwy"/>
+        <xs:element ref="aman:aircraft"/>
+        <xs:element ref="aman:handling"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="flightID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="aman:arcid"/>
+        <xs:element ref="aman:adep"/>
+        <xs:element ref="aman:ades"/>
+        <xs:element ref="aman:eobt"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="arcid" type="xs:NCName"/>
+  <xs:element name="adep" type="xs:NCName"/>
+  <xs:element name="ades" type="xs:NCName"/>
+  <xs:element name="eobt" type="aman:TimestampType"/>
+  <xs:element name="point">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="aman:aptto"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="aman:pfl"/>
+          <xs:element ref="aman:ttl"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="order" use="required" type="xs:positiveInteger"/>
+      <xs:attribute name="pointName" use="required" type="aman:icaoPointNameType"/>
+      <xs:attribute name="pointUsage" type="aman:PointUsageType"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="aptto" type="aman:TimestampType"/>
+  <xs:element name="pfl" type="aman:FlightlevelType"/>
+  <xs:element name="ttl" type="xs:positiveInteger"/>
+  <xs:element name="atldt" type="aman:TimestampType"/>
+  <xs:element name="assignedArrRwy">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="aman:RwyarrType"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="RwyarrType">
+    <xs:annotation>
+      <xs:documentation>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{2}[LCR]{0,1}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="icaoPointNameType">
+    <xs:annotation>
+      <xs:documentation>
+        The designator of a significant point.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="2"/>
+      <xs:maxLength value="5"/>
+      <xs:pattern value="[A-Z0-9]{2,5}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="aircraft">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="aman:arctyp"/>
+        <xs:element ref="aman:wktrc"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="arctyp" type="xs:NCName"/>
+  <xs:element name="wktrc" type="xs:NCName"/>
+  <xs:element name="handling">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="aman:seqnr"/>
+      </xs:sequence>
+      <xs:attribute name="isLastRecord" use="required" type="xs:boolean"/>
+      <xs:attribute name="isPriority" use="required" type="xs:boolean"/>
+      <xs:attribute name="status" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="seqnr" type="xs:integer"/>
+  <xs:simpleType name="PointUsageType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="IAF"/>
+      <xs:enumeration value="FAF"/>
+      <xs:enumeration value="STX"/>
+      <!-- Initial Approach Fix -->
+      <!-- Final Approach Fix -->
+      <!-- Stack Exit -->
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TimestampType">
+    <xs:annotation>
+      <xs:documentation>
+        UTC timestamps used throughout
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime">
+      <xs:pattern value=".*Z"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="icaoAerodromeType">
+    <xs:annotation>
+      <xs:documentation>
+        A four letter ICAO designator (published in Doc 7930, or ZZZZ)
+      </xs:documentation>
+      <xs:appinfo/>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="4"/>
+      <xs:pattern value="[A-Z]{4}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FlightlevelType">
+    <xs:annotation>
+      <xs:documentation>
+        A flight level expressed either as; "F" or "A" followed by three digits or,"S" or "M" followed by four
+        digits.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="4"/>
+      <xs:maxLength value="5"/>
+      <xs:pattern value="([F|A][0-9]{3})|([S|M][0-9]{4})"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TopicType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="ARRIVAL_SEQUENCE_DATA_A"/>
+      <xs:enumeration value="ARRIVAL_SEQUENCE_DATA_B"/>
+      <xs:enumeration value="ARRIVAL_SEQUENCE_DATA_C"/>
+      <xs:enumeration value="ARRIVAL_SEQUENCE_DATA_D"/>
+      <xs:enumeration value="ARRIVAL_SEQUENCE_DATA_E"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

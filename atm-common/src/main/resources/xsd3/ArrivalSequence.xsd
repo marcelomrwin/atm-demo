@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dt="urn:x-eurocae-example:service:aman:shared"
+           xmlns:aman="urn:x-eurocae-example:service:aman:pub" targetNamespace="urn:x-eurocae-example:service:aman:pub"
+           elementFormDefault="qualified">
+    <xs:import namespace="urn:x-eurocae-example:service:aman:shared" schemaLocation="./SharedTypes.xsd"/>
+    <xs:element name="arrivalSequence" type="aman:ArrivalSequenceType"/>
+    <xs:element name="providerException" type="aman:ProviderExceptionType"/>
+    <!-- ======================== -->
+    <!-- "Core:ArrivalSequence" -->
+    <!-- ======================== -->
+    <xs:complexType name="ArrivalSequenceType">
+        <xs:annotation>
+            <xs:documentation>
+                An Arrival Sequence is a set of sequence entries, with message related attributes (sender,
+                receiver, timestamp).
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="aman:messageMeta" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="entry" type="aman:ArrivalManagementInformationType" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="messageMeta" type="aman:MessageMetaType">
+        <xs:annotation>
+            <xs:documentation>
+                Top-level element provided for use as Substitution Group head. A potential use is for protocol
+                specific message metadata.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="MessageMetaType">
+        <xs:sequence/>
+        <xs:attribute name="creationTime" type="dt:TimestampType"/>
+        <xs:attribute name="publicationTime" type="dt:TimestampType"/>
+        <xs:attribute name="isFirstAfterOutage" type="xs:boolean"/>
+        <xs:attribute name="managedAerodrome" type="dt:icaoAerodromeType"/>
+    </xs:complexType>
+    <!-- ==================================== -->
+    <!-- "Core:ArrivalManagementInformation" -->
+    <!-- ==================================== -->
+    <xs:complexType name="ArrivalManagementInformationType">
+        <xs:sequence>
+            <xs:element name="flightID" type="aman:FlightIdentifierType" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="point" type="aman:PointDataType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                        Point/Advisory structure handled as a list of point/time elements with usage specific
+                        annotation.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="atldt" type="dt:TimestampType" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        AMAN Planned Target Landing Time.
+                        In SESAR 1 documentation called AMAN Planned Threshold Time ("APTT").
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="assignedArrRwy" nillable="true" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        In the class model this is optional. This example assumes that the information will be
+                        passed if a runway is assigned, and "nil" will be published otherwise.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attribute name="name" type="dt:RwyarrType"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="aircraft" type="aman:AircraftDataType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="handling" type="aman:HandlingType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- .............................................. -->
+    <!-- Support type: aircraft related information -->
+    <!-- (includes custom wake turbulence category) -->
+    <!-- ...................................... ...... -->
+    <xs:complexType name="AircraftDataType">
+        <xs:sequence>
+            <xs:element name="arctyp" type="dt:icaoArctypType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="wktrc" type="dt:icaoWaketurbcatType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="customWTC" type="dt:CustomWaketurbcatType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- ................................................... -->
+    <!-- Support type: AMAN handling related information -->
+    <!-- (includes priority handling indicators) -->
+    <!-- ................................................... -->
+    <xs:complexType name="HandlingType">
+        <xs:sequence>
+            <xs:element name="seqnr" type="xs:positiveInteger" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        In a real-world implementation, would specify the applicable syntax and semantics
+                        here.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="indicator" type="aman:PriorityHandlingIndicatorType" minOccurs="0"
+                        maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        Information provided in case of a priority handling of the flight
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="status" type="aman:CodeAMANStatusType" use="required"/>
+        <xs:attribute name="isPriority" type="xs:boolean" use="optional" default="false"/>
+        <xs:attribute name="isLastRecord" type="xs:boolean" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="PriorityHandlingIndicatorType">
+        <xs:sequence>
+            <xs:element name="priority" type="dt:LimCharUnlimFrom1Type" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        A priority indicator as used at the airport in question
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="priorityReason" type="dt:LimCharUnlimFrom1Type" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        Description of the reason why the flight is priority handled
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="CodeAMANStatusType">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="UNSTABLE"/>
+            <xs:enumeration value="STABLE"/>
+
+            <xs:enumeration value="SEQUENCED_UNSTABLE"/>
+            <xs:enumeration value="SEQUENCED_STABLE"/>
+            <xs:enumeration value="MANUAL_INTERVENTION"/>
+            <xs:enumeration value="SEQUENCED_FROZEN"/>
+            <xs:enumeration value="TIME_FROZEN"/>
+            <xs:enumeration value="IS_ON_FINAL"/>
+            <xs:enumeration value="HAS_LANDED"/>
+            <xs:enumeration value="DESEQUENCED"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- =============================== -->
+    <!-- "Core:FlightIdentification" -->
+    <!-- =============================== -->
+    <xs:complexType name="FlightIdentifierType" final="#all">
+        <xs:sequence>
+            <xs:element name="arcid" type="dt:icaoArcidType" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="adep" type="dt:icaoAerodromeType" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="ades" type="dt:icaoAerodromeType" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="eobt" type="dt:TimestampType" nillable="true" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="ifplid" type="dt:IfplidType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="amanUniqueTechId" type="dt:LimCharUnlimFrom1Type" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="gufi" type="dt:GloballyUniqueFlightIdentifierType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="modeSId" type="dt:modeSIdentifierType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- ================================================== -->
+    <!-- "Core:MeteringInformation" and "Core:Advisory" -->
+    <!-- ================================================== -->
+    <xs:complexType name="PointDataType" abstract="true">
+        <xs:annotation>
+            <xs:documentation>
+                Basic point/time attribute set.
+                In this example realization, the "MeteringInformation" and "Advisory" UML classes have been
+                combined into a single modular structure.
+                For the sake of simplicity, the example assumes that the AMAN issues advisories only for the
+                Metering Fix, and that there is no Initial Metering Fix.
+                Extensions to more complex scenarios are straightforward.
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:sequence>
+            <xs:element name="aptto" type="dt:TimestampType" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        AMAN planned target time over point
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="pointName" type="dt:icaoPointNameType" use="required"/>
+        <xs:attribute name="order" type="xs:positiveInteger" use="required">
+            <xs:annotation>
+                <xs:documentation>
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="MFType">
+        <xs:annotation>
+            <xs:documentation>
+                For a Metering Fix, provide TTL and route advisory if available.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="aman:PointDataType">
+                <xs:sequence>
+                    <xs:element name="ttl" type="xs:integer" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                The time to lose (in minutes) advised for this flight. Time to gain is
+                                passed as negative value.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="constraintCTA" type="dt:TimestampType" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="routeAdv" type="dt:LimCharUnlimFrom1Type" minOccurs="0"
+                                maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+
+                                The route advised for this flight, data formatted according to ICAO FPL
+                                field 15 conventions.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="speedAdv" type="dt:SpeedAdvisoryType" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="COPType">
+        <xs:annotation>
+            <xs:documentation>
+                For a COP, provide also requested and planned flight level if available.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="aman:PointDataType">
+                <xs:sequence>
+                    <xs:element name="pfl" type="dt:FlightlevelType" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="rfl" type="dt:FlightlevelType" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="OtherPointType">
+        <xs:annotation>
+            <xs:documentation>
+                For other points, provide only AMAN Planned Time Over and point usage (if applicable).
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="aman:PointDataType">
+                <xs:sequence/>
+                <xs:attribute name="pointUsage" type="aman:PointUsageType" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="PointUsageType">
+        <xs:restriction base="xs:token">
+
+
+            <xs:enumeration value="IAF"/>
+            <xs:enumeration value="FAF"/>
+            <xs:enumeration value="STX"/>
+            <!-- Initial Approach Fix -->
+            <!-- Final Approach Fix -->
+            <!-- Stack Exit -->
+            <!-- Note: RUNWAY_THRESHOLD is not listed because the pertinent information is transmitted also in
+            the ArrivalMAnagementInformation type -->
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- ====================================================== -->
+    <!-- "communicateException Request Message related Types" -->
+    <!-- ====================================================== -->
+    <xs:complexType name="ProviderExceptionType">
+        <xs:sequence>
+            <xs:element name="provException" type="aman:AmanExceptionType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="AmanExceptionType">
+        <xs:annotation>
+            <xs:documentation>
+                The possible exceptions communicated by the provider to the consumers
+            </xs:documentation>
+            <xs:appinfo/>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="SEQUENCING_DISABLED">
+                <xs:annotation>
+                    <xs:documentation>
+                        Indicates that the AMAN sequencing has been disabled.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AMAN_UNAVAILABLE">
+                <xs:annotation>
+                    <xs:documentation>
+                        AMAN System unavailable, no sequencing.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AMAN_DEGRADED">
+                <xs:annotation>
+                    <xs:documentation>
+                        AMAN not functioning, information not trustworthy.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

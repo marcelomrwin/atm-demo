@@ -1,0 +1,124 @@
+﻿apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemisSecurity
+metadata:
+  name: rhbk-module-security
+  namespace: nav-portugal
+spec:
+  loginModules:
+    keycloakLoginModules:
+      - configuration:
+          authServerUrl: 'https://rhbk-nav-portugal.apps.ocp4.masales.cloud'
+          verifyTokenAudience: true
+          confidentialPort: 0
+          sslRequired: external
+          resource: amq-broker
+          principalAttribute: preferred_username
+          realm: nav-portugal
+          useResourceRoleMappings: true
+          enableBasicAuth: true
+          credentials:
+            - key: secret
+              value: G2I810Drfp1CtnfuJJLGZPtoAErcoVuf
+        moduleType: directAccess
+        name: login-keycloak-broker-module
+    propertiesLoginModules:
+      - name: prop-module
+  securityDomains:
+    brokerDomain:
+      loginModules:
+        - debug: true
+          flag: sufficient
+          name: login-keycloak-broker-module
+      name: activemq
+    consoleDomain:
+      loginModules:
+        - debug: true
+          flag: required
+          name: prop-module
+      name: console
+  securitySettings:
+    broker:
+      - match: '#'
+        permissions:
+          - operationType: createAddress
+            roles:
+              - admin
+          - operationType: deleteAddress
+            roles:
+              - admin
+          - operationType: createDurableQueue
+            roles:
+              - admin
+          - operationType: deleteDurableQueue
+            roles:
+              - admin
+          - operationType: createNonDurableQueue
+            roles:
+              - admin
+          - operationType: deleteNonDurableQueue
+            roles:
+              - admin
+          - operationType: send
+            roles:
+              - admin
+              - sender
+          - operationType: consume
+            roles:
+              - admin
+              - consumer
+          - operationType: browse
+            roles:
+              - admin
+              - viewer
+              - consumer
+      - match: 'activemq.management.#'
+        permissions:
+          - operationType: createNonDurableQueue
+            roles:
+              - admin
+          - operationType: createAddress
+            roles:
+              - admin
+          - operationType: consume
+            roles:
+              - admin
+          - operationType: manage
+            roles:
+              - admin
+          - operationType: send
+            roles:
+              - admin
+    management:
+      authorisation:
+        allowedList:
+          - domain: hawtio
+        roleAccess:
+          - accessList:
+              - method: list*
+                roles:
+                  - admin
+                  - viewer
+              - method: get*
+                roles:
+                  - admin
+                  - viewer
+              - method: is*
+                roles:
+                  - admin
+                  - viewer
+              - method: set*
+                roles:
+                  - admin
+              - method: browse*
+                roles:
+                  - admin
+              - method: count*
+                roles:
+                  - admin
+              - method: '*'
+                roles:
+                  - admin
+            domain: org.apache.activemq.artemis
+      hawtioRoles:
+        - admin
+        - viewer

@@ -1,0 +1,47 @@
+services:
+  keycloak:
+    image: registry.redhat.io/rhbk/keycloak-rhel9:24-8
+    container_name: keycloak-24.8
+    restart: unless-stopped
+    ports:
+      - 8180:8080
+      - 8543:8443
+    command:
+      - export
+      - --dir
+      - /opt/keycloak/export/realm
+      - --realm
+      - nav-portugal
+      - --users
+      - realm_file
+    volumes:
+      - ./certs:/opt/keycloak/export/certs
+      - ./realm:/opt/keycloak/export/realm
+    environment:
+      DEBUG_PORT: '*:8787'
+      TZ: Europe/Madrid
+      KC_LOG: console,file
+      KC_LOG_LEVEL: INFO,org.keycloak.transaction:warn,org.keycloak.services.scheduled:warn,org.hibernate:info,org.infinispan.protostream:info
+      KC_LOG_FILE: keycloak.log
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/export/certs/tls.key
+      KC_DB_URL_HOST: postgresql
+      KC_HTTPS_PORT: 8443
+      KC_HTTP_PORT: 8080
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_CACHE: local
+      KC_DB_URL: jdbc:postgresql://host.docker.internal:5432/keycloak
+      KC_FEATURES: preview
+      KC_PROXY: edge
+      KC_CACHE_STACK: kubernetes
+      KC_HTTP_ENABLED: true
+      KC_HEALTH_ENABLED: true
+      KC_DB_USERNAME: keycloak
+      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/export/certs/tls.crt
+      KC_TRUSTSTORE_PATHS: /opt/keycloak/export/certs/ca.crt,/opt/keycloak/export/certs/service-ca.crt
+      KC_HOSTNAME_DEBUG: true
+      KC_DB: postgres
+      KC_HOSTNAME_STRICT_BACKCHANNEL: false
+      KC_HOSTNAME: rhbk-nav-portugal.apps.ocp4.masales.cloud
+      KC_HOSTNAME_STRICT: false
+      KC_TRANSACTION_XA_ENABLED: false
+      KC_DB_PASSWORD: keycloak

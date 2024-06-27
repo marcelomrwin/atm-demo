@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+AMAN Sequence example.
+Root element attributes to allow for local validation, does not need to be in publication.
+-->
+<aman:arrivalSequence xmlns:aman="urn:x-eurocae-example:service:aman:pub"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="urn:x-eurocaeexample:service:aman:pub ./ArrivalSequenceInformationSubscriber_msg.xsd">
+    <aman:messageMeta creationTime="2017-07-27T14:36:32Z" publicationTime="2017-07-27T14:37:00Z"
+                      isFirstAfterOutage="false" managedAerodrome="EADD"/>
+    <aman:entry>
+        <aman:flightID>
+            <aman:arcid>ABC1234</aman:arcid>
+            <aman:adep>EADA</aman:adep>
+            <aman:ades>EADD</aman:ades>
+            <aman:eobt>2017-07-27T14:00:47Z</aman:eobt>
+        </aman:flightID>
+        <aman:point pointName="FOBAR" order="1" xsi:type="aman:COPType">
+            <aman:aptto>2017-07-27T14:40:00Z</aman:aptto>
+            <aman:pfl>F180</aman:pfl>
+        </aman:point>
+        <aman:point pointName="FOOOO" order="2" xsi:type="aman:MFType">
+            <aman:aptto>2017-07-27T14:58:30Z</aman:aptto>
+            <aman:ttl>3</aman:ttl>
+        </aman:point>
+        <aman:point pointName="BAAAR" order="3" pointUsage="FAF" xsi:type="aman:OtherPointType">
+            <aman:aptto>2017-07-27T15:04:00Z</aman:aptto>
+        </aman:point>
+        <aman:atldt>2017-07-27T15:08:14Z</aman:atldt>
+        <aman:assignedArrRwy name="02R"/>
+        <aman:aircraft>
+            <aman:arctyp>A320</aman:arctyp>
+            <aman:wktrc>M</aman:wktrc>
+        </aman:aircraft>
+        <aman:handling status="SEQUENCED_FROZEN" isPriority="false" isLastRecord="false">
+            <aman:seqnr>1</aman:seqnr>
+        </aman:handling>
+    </aman:entry>
+
+    <aman:entry>
+        <aman:flightID>
+            <aman:arcid>ABC1234</aman:arcid>
+            <aman:adep>EADA</aman:adep>
+            <aman:ades>EADD</aman:ades>
+            <aman:eobt>2017-07-27T14:00:47Z</aman:eobt>
+        </aman:flightID>
+        <aman:point pointName="FOBAR" order="1" xsi:type="aman:COPType">
+            <aman:aptto>2017-07-27T14:40:00Z</aman:aptto>
+            <aman:pfl>F180</aman:pfl>
+        </aman:point>
+        <aman:point pointName="FOOOO" order="2" xsi:type="aman:MFType">
+            <aman:aptto>2017-07-27T14:58:30Z</aman:aptto>
+            <aman:ttl>3</aman:ttl>
+        </aman:point>
+        <aman:point pointName="BAAAR" order="3" pointUsage="FAF" xsi:type="aman:OtherPointType">
+            <aman:aptto>2017-07-27T15:04:00Z</aman:aptto>
+        </aman:point>
+        <aman:atldt>2017-07-27T15:08:14Z</aman:atldt>
+        <aman:assignedArrRwy name="02R"/>
+        <aman:aircraft>
+            <aman:arctyp>A320</aman:arctyp>
+            <aman:wktrc>M</aman:wktrc>
+        </aman:aircraft>
+        <aman:handling status="SEQUENCED_FROZEN" isPriority="false" isLastRecord="false">
+            <aman:seqnr>1</aman:seqnr>
+        </aman:handling>
+    </aman:entry>
+    <!-- more entries would follow here -->
+</aman:arrivalSequence>

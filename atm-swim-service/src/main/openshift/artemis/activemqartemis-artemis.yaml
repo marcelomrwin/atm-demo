@@ -1,0 +1,40 @@
+﻿apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemis
+metadata:
+  name: artemis-swim
+  namespace: nav-portugal
+spec:
+  acceptors:
+    - bindToAllInterfaces: true
+      connectionsAllowed: 100
+      expose: true
+      name: amqp
+      port: 5672
+      protocols: amqp
+    - bindToAllInterfaces: true
+      connectionsAllowed: 100
+      expose: true
+      name: openwire
+      port: 61616
+      protocols: 'amqp,openwire,core'
+  adminPassword: artemis
+  adminUser: artemis
+  console:
+    expose: true
+  deploymentPlan:
+    size: 1
+    persistenceEnabled: true
+    requireLogin: false
+    messageMigration: false
+    managementRBACEnabled: true
+    journalType: nio
+    jolokiaAgentEnabled: true
+    image: placeholder
+    storage:
+      size: 4Gi
+      storageClassName: managed-nfs-storage
+    extraMounts:
+      secrets:
+        - address-swim-configurations-bp
+        - security-swim-roles-bp
+        - sso-jaas-config

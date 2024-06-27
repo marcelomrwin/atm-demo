@@ -1,0 +1,11 @@
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemis
+metadata:
+  name: artemis-as
+spec:
+  deploymentPlan:
+    extraMounts:
+      secrets:
+        - address-configurations-bp
+        - security-roles-bp
+        - artemis-jaas-config

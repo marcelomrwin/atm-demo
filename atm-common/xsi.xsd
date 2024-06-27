@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/2001/XMLSchema-instance" xmlns:aman="urn:x-eurocae-example:service:aman:pub" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <xs:import namespace="urn:x-eurocae-example:service:aman:pub" schemaLocation="arrival_sequence_2.xsd"/>
+  <xs:attribute name="schemaLocation"/>
+  <xs:attribute name="type" type="xs:NMTOKEN"/>
+</xs:schema>

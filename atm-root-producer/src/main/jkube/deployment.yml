@@ -1,0 +1,28 @@
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+            - name: JMS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: atm-root-producer-config
+                  key: jms.host
+            - name: APP_JOB_INTERVAL
+              valueFrom:
+                configMapKeyRef:
+                  name: atm-root-producer-config
+                  key: job.interval
+            - name: JMS_USER
+              valueFrom:
+                secretKeyRef:
+                  name: atm-root-producer-secret
+                  key: jms.user
+            - name: JMS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: atm-root-producer-secret
+                  key: jms.password
