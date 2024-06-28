@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<arrivalSequence xmlns="urn:x-eurocae-example:service:aman:pub" topic="ARRIVAL_SEQUENCE_DATA_C">
+    <messageMeta creationTime="2024-06-28T00:19:46.000Z" isFirstAfterOutage="false" managedAerodrome="UUER" publicationTime="2024-06-28T00:17:19.000Z"/>
+    <entry>
+        <flightID>
+            <arcid>Z73N5A7</arcid>
+            <adep>CVAH</adep>
+            <ades>KAKP</ades>
+            <eobt>2024-06-28T00:17:27.000Z</eobt>
+        </flightID>
+        <point order="2" pointName="GVPDY" pointUsage="STX">
+            <aptto>2024-06-28T00:14:21.000Z</aptto>
+            <pfl>31B8R</pfl>
+            <ttl>74</ttl>
+        </point>
+        <assignedArrRwy name="1O6"/>
+        <aircraft>
+            <arctyp>Fw-190</arctyp>
+            <wktrc>M</wktrc>
+        </aircraft>
+        <handling isLastRecord="false" isPriority="true">
+            <seqnr>1</seqnr>
+        </handling>
+    </entry>
+    <entry>
+        <flightID>
+            <arcid>8VP8F26</arcid>
+            <adep>NVVY</adep>
+            <ades>PAJJ</ades>
+            <eobt>2024-06-28T00:19:46.000Z</eobt>
+        </flightID>
+        <point order="1" pointName="QTYVJ" pointUsage="FAF">
+            <aptto>2024-06-28T00:24:32.000Z</aptto>
+            <pfl>C14O1</pfl>
+            <ttl>66</ttl>
+        </point>
+        <assignedArrRwy name="C85"/>
+        <aircraft>
+            <arctyp>Spitfire</arctyp>
+            <wktrc>E</wktrc>
+        </aircraft>
+        <handling isLastRecord="false" isPriority="true">
+            <seqnr>2</seqnr>
+        </handling>
+    </entry>
+    <entry>
+        <flightID>
+            <arcid>533GEG8</arcid>
+            <adep>LGCA</adep>
+            <ades>VCWB</ades>
+            <eobt>2024-06-28T00:21:27.000Z</eobt>
+        </flightID>
+        <point order="2" pointName="DJDGP" pointUsage="FAF">
+            <aptto>2024-06-28T00:15:00.000Z</aptto>
+            <pfl>3UK71</pfl>
+            <ttl>8</ttl>
+        </point>
+        <assignedArrRwy name="4D7"/>
+        <aircraft>
+            <arctyp>Be-12</arctyp>
+            <wktrc>H</wktrc>
+        </aircraft>
+        <handling isLastRecord="true" isPriority="false">
+            <seqnr>3</seqnr>
+        </handling>
+    </entry>
+    <entry>
+        <flightID>
+            <arcid>0Q883VM</arcid>
+            <adep>EVIG</adep>
+            <ades>AOSX</ades>
+            <eobt>2024-06-28T00:23:15.000Z</eobt>
+        </flightID>
+        <point order="2" pointName="BFYKB" pointUsage="FAF">
+            <aptto>2024-06-28T00:19:15.000Z</aptto>
+            <pfl>X74I1</pfl>
+            <ttl>42</ttl>
+        </point>
+        <assignedArrRwy name="2M5"/>
+        <aircraft>
+            <arctyp>Saab JAS 39 Gripen</arctyp>
+            <wktrc>Q</wktrc>
+        </aircraft>
+        <handling isLastRecord="false" isPriority="false">
+            <seqnr>4</seqnr>
+        </handling>
+    </entry>
+    <entry>
+        <flightID>
+            <arcid>AH36O72</arcid>
+            <adep>XCFA</adep>
+            <ades>BFYK</ades>
+            <eobt>2024-06-28T00:21:42.000Z</eobt>
+        </flightID>
+        <point order="1" pointName="DAEWJ" pointUsage="FAF">
+            <aptto>2024-06-28T00:25:19.000Z</aptto>
+            <pfl>422MB</pfl>
+            <ttl>88</ttl>
+        </point>
+        <assignedArrRwy name="47U"/>
+        <aircraft>
+            <arctyp>Ka-25</arctyp>
+            <wktrc>G</wktrc>
+        </aircraft>
+        <handling isLastRecord="false" isPriority="false">
+            <seqnr>5</seqnr>
+        </handling>
+    </entry>
+    <entry>
+        <flightID>
+            <arcid>588C8VW</arcid>
+            <adep>YIXM</adep>
+            <ades>FUBF</ades>
+            <eobt>2024-06-28T00:13:27.000Z</eobt>
+        </flightID>
+        <point order="2" pointName="HVZBG" pointUsage="FAF">
+            <aptto>2024-06-28T00:21:42.000Z</aptto>
+            <pfl>VG641</pfl>
+            <ttl>71</ttl>
+        </point>
+        <assignedArrRwy name="8K7"/>
+        <aircraft>
+            <arctyp>MiG-9</arctyp>
+            <wktrc>J</wktrc>
+        </aircraft>
+        <handling isLastRecord="true" isPriority="false">
+            <seqnr>6</seqnr>
+        </handling>
+    </entry>
+    <entry>
+        <flightID>
+            <arcid>XYI1185</arcid>
+            <adep>FUBF</adep>
+            <ades>EALT</ades>
+            <eobt>2024-06-28T00:23:30.000Z</eobt>
+        </flightID>
+        <point order="1" pointName="RNCFQ" pointUsage="FAF">
+            <aptto>2024-06-28T00:22:44.000Z</aptto>
+            <pfl>6D35B</pfl>
+            <ttl>70</ttl>
+        </point>
+        <assignedArrRwy name="G28"/>
+        <aircraft>
+            <arctyp>Su-32FN</arctyp>
+            <wktrc>F</wktrc>
+        </aircraft>
+        <handling isLastRecord="true" isPriority="true">
+            <seqnr>7</seqnr>
+        </handling>
+    </entry>
+    <entry>
+        <flightID>
+            <arcid>AK8K451</arcid>
+            <adep>GPFR</adep>
+            <ades>HVZB</ades>
+            <eobt>2024-06-28T00:17:03.000Z</eobt>
+        </flightID>
+        <point order="1" pointName="MMWMW" pointUsage="FAF">
+            <aptto>2024-06-28T00:18:05.000Z</aptto>
+            <pfl>14OY6</pfl>
+            <ttl>17</ttl>
+        </point>
+        <assignedArrRwy name="K61"/>
+        <aircraft>
+            <arctyp>An-32</arctyp>
+            <wktrc>V</wktrc>
+        </aircraft>
+        <handling isLastRecord="true" isPriority="false">
+            <seqnr>8</seqnr>
+        </handling>
+    </entry>
+    <entry>
+        <flightID>
+            <arcid>424O7QF</arcid>
+            <adep>NNLK</adep>
+            <ades>JOFP</ades>
+            <eobt>2024-06-28T00:22:13.000Z</eobt>
+        </flightID>
+        <point order="1" pointName="FOQTU" pointUsage="FAF">
+            <aptto>2024-06-28T00:20:01.000Z</aptto>
+            <pfl>1CV44</pfl>
+            <ttl>50</ttl>
+        </point>
+        <assignedArrRwy name="8L5"/>
+        <aircraft>
+            <arctyp>Be-12</arctyp>
+            <wktrc>H</wktrc>
+        </aircraft>
+        <handling isLastRecord="false" isPriority="false">
+            <seqnr>9</seqnr>
+        </handling>
+    </entry>
+</arrivalSequence>

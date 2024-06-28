@@ -6,5 +6,5 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record SubscriptionResponse(UUID subscriptionId, String responseQueue, LocalDateTime subscriptionExp) {
+public record SubscriptionResponse(UUID subscriptionId,String amqServerHost, Integer amqServerPort, String responseQueue, LocalDateTime subscriptionExp) {
 }

@@ -63,3 +63,8 @@ If you want to learn more about building native executables, please consult <htt
 - Camel Micrometer ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/micrometer.html)): Collect various metrics directly from Camel routes using the Micrometer library
 - Camel XPath ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/xpath.html)): Evaluates an XPath expression against an XML payload
 - Camel HTTP ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/http.html)): Send requests to external HTTP servers using Apache HTTP Client 5.x
+
+```shell
+podman build -f src/main/docker/Dockerfile.jvm -t quay.io/masales/atm-camel-quarkus:latest .
+podman run --rm --name atm-camel-quarkus --env AMQ_QUEUE=masales-queue --env AMQ_HOST=host.docker.internal --env AMQ_PORT=61616 --env AMQ_USER=artemis --env AMQ_PASSWORD=artemis --env CALL_BACK_URL=http://host.docker.internal:8088/api/callback quay.io/masales/atm-camel-quarkus:latest
+```

@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -29,8 +30,7 @@ public class MessageLogController {
         this.messageLogService = messageLogService;
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @RequestMapping("/list")
+    @RequestMapping(path = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> listMessageLog() {
         List<MessageLog> messageLogs = messageLogService.listAll();
         return ResponseEntity.ok(messageLogs);

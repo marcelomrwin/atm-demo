@@ -10,6 +10,7 @@ import com.redhat.atm.service.SubscriptionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,8 @@ public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;
     private final ArtemisQueueManagementService artemisQueueManagementService;
+    @Value("${jms.publisher.activemq.broker-url}")
+    private String PUBLISHER_BROKER_URL;
 
     @Autowired
     public SubscriptionController(SubscriptionService subscriptionService, ArtemisQueueManagementService artemisQueueManagementService) {
@@ -53,7 +56,7 @@ public class SubscriptionController {
         try {
             Subscription subscription = subscriptionService.subscribe(jwt.getClaimAsString("preferred_username"), request.topicTypes(), jwt.getClaimAsString("amq-role-name"));
             log.info("Successfully created subscription: {}", subscription.getSubscriptionId());
-            return new ResponseEntity(new SubscriptionResponse(subscription.getSubscriptionId(), subscription.getResponseQueue(), subscription.getExpiresAt()), HttpStatus.CREATED);
+            return new ResponseEntity<>(new SubscriptionResponse(subscription.getSubscriptionId(), PUBLISHER_BROKER_URL, 61616, subscription.getResponseQueue(), subscription.getExpiresAt()), HttpStatus.CREATED);
         } catch (Exception e) {
             log.error("Error while subscribing", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());

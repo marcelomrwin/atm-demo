@@ -88,9 +88,9 @@ public class JmsConfiguration {
         factory.setConcurrency("1-1");
         configurer.configure(factory, connectionFactory);
         factory.setPubSubDomain(true);
-        factory.setSubscriptionDurable(true);
-        String hostname = env.getProperty("HOSTNAME", "localhost");
-        factory.setClientId(hostname);
+//        factory.setSubscriptionDurable(true);
+//        String hostname = env.getProperty("HOSTNAME", "localhost");
+//        factory.setClientId(hostname);
         return factory;
     }
 
