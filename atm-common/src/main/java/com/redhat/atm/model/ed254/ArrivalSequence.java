@@ -17,6 +17,8 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -48,36 +50,46 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "arrivalSequence")
 public class ArrivalSequence {
 
+    /**
+     * -- SETTER --
+     *  Sets the value of the messageMeta property.
+     *
+     *
+     * -- GETTER --
+     *  Gets the value of the messageMeta property.
+     *
+     @param value
+     *     allowed object is
+     *     {@link MessageMeta }
+      * @return
+      *     possible object is
+      *     {@link MessageMeta }
+     */
+    @Getter
+    @Setter
     @XmlElement(required = true)
     protected MessageMeta messageMeta;
     @XmlElement(required = true)
     protected List<Entry> entry;
+    /**
+     * -- SETTER --
+     *  Sets the value of the topic property.
+     *
+     *
+     * -- GETTER --
+     *  Gets the value of the topic property.
+     *
+     @param value
+     *     allowed object is
+     *     {@link TopicType }
+      * @return
+      *     possible object is
+      *     {@link TopicType }
+     */
+    @Getter
+    @Setter
     @XmlAttribute(name = "topic", required = true)
     protected TopicType topic;
-
-    /**
-     * Gets the value of the messageMeta property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link MessageMeta }
-     *     
-     */
-    public MessageMeta getMessageMeta() {
-        return messageMeta;
-    }
-
-    /**
-     * Sets the value of the messageMeta property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link MessageMeta }
-     *     
-     */
-    public void setMessageMeta(MessageMeta value) {
-        this.messageMeta = value;
-    }
 
     /**
      * Gets the value of the entry property.
@@ -106,30 +118,6 @@ public class ArrivalSequence {
             entry = new ArrayList<Entry>();
         }
         return this.entry;
-    }
-
-    /**
-     * Gets the value of the topic property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TopicType }
-     *     
-     */
-    public TopicType getTopic() {
-        return topic;
-    }
-
-    /**
-     * Sets the value of the topic property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TopicType }
-     *     
-     */
-    public void setTopic(TopicType value) {
-        this.topic = value;
     }
 
 }

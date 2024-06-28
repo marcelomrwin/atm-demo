@@ -27,9 +27,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/subscription/v1/ping").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/subscription/v1/admin/**").hasRole(ADMIN)
                         .requestMatchers(HttpMethod.PUT, "/api/subscription/v1/admin/**").hasRole(ADMIN)
+                        .requestMatchers(HttpMethod.POST,"/api/queue/management/v1/admin/**").hasRole(ADMIN)
                         .requestMatchers(HttpMethod.POST, "/api/subscription/v1/user/**").hasRole(USER)
                         .requestMatchers(HttpMethod.PUT, "/api/subscription/v1/user/**").hasRole(USER)
                         .requestMatchers(HttpMethod.GET, "/api/subscription/v1/admin-and-user/**").hasAnyRole(ADMIN,USER)
+                        .requestMatchers(HttpMethod.GET,"/api/messagelog/v1/**").permitAll()
                         .anyRequest().authenticated());
 
         http.sessionManagement(sess -> sess.sessionCreationPolicy(

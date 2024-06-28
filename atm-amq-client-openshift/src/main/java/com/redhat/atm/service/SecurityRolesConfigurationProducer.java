@@ -27,11 +27,24 @@ public class SecurityRolesConfigurationProducer {
 
     public V1Secret updateSecurityRoles(List<Subscription> subscriptions, CoreV1Api coreV1Api, String namespace) throws IOException, ApiException {
         log.info("Updating security roles");
+
         Properties properties = new PropertiesWithoutComments();
+        properties.put("securityRoles.#." + adminRoleName + ".send", Boolean.TRUE.toString());
+        properties.put("securityRoles.#." + adminRoleName + ".manage", Boolean.TRUE.toString());
+        properties.put("securityRoles.#." + adminRoleName + ".deleteAddress", Boolean.TRUE.toString());
+        properties.put("securityRoles.#." + adminRoleName + ".deleteDurableQueue", Boolean.TRUE.toString());
+        properties.put("securityRoles.#." + adminRoleName + ".deleteNonDurableQueue", Boolean.TRUE.toString());
+        properties.put("securityRoles.#." + adminRoleName + ".browse", Boolean.TRUE.toString());
+
         for (Subscription subscription : subscriptions) {
             properties.put("securityRoles." + subscription.getResponseQueue() + "." + subscription.getSubscriberRoleName() + ".consume", Boolean.TRUE.toString());
-            properties.put("securityRoles." + subscription.getResponseQueue() + "."+adminRoleName+".send", Boolean.TRUE.toString());
-            properties.put("securityRoles." + subscription.getResponseQueue() + "."+adminRoleName+".manage", Boolean.TRUE.toString());
+
+            properties.put("securityRoles." + subscription.getResponseQueue() + "." + adminRoleName + ".send", Boolean.TRUE.toString());
+            properties.put("securityRoles." + subscription.getResponseQueue() + "." + adminRoleName + ".manage", Boolean.TRUE.toString());
+            properties.put("securityRoles." + subscription.getResponseQueue() + "." + adminRoleName + ".deleteAddress", Boolean.TRUE.toString());
+            properties.put("securityRoles." + subscription.getResponseQueue() + "." + adminRoleName + ".deleteDurableQueue", Boolean.TRUE.toString());
+            properties.put("securityRoles." + subscription.getResponseQueue() + "." + adminRoleName + ".deleteNonDurableQueue", Boolean.TRUE.toString());
+
         }
 
         V1Secret secret = OpenshiftUtil.getBaseSecret(secretName);
@@ -40,7 +53,7 @@ public class SecurityRolesConfigurationProducer {
         log.info("Updating the secret {} using Kubernetes API", secretName);
         CoreV1Api.APIreplaceNamespacedSecretRequest replaceRequest = coreV1Api.replaceNamespacedSecret(secretName, namespace, secret);
         ApiResponse<V1Secret> replaceResponse = replaceRequest.executeWithHttpInfo();
-        log.info("API Response Replace. Status: {}, Headers: {}, Data: {}", replaceResponse.getStatusCode(), replaceResponse.getHeaders(), replaceResponse.getData());
+        log.debug("API Response Replace. Status: {}, Headers: {}, Data: {}", replaceResponse.getStatusCode(), replaceResponse.getHeaders(), replaceResponse.getData());
         return secret;
     }
 

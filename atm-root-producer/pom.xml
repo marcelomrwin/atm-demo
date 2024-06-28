@@ -58,6 +58,12 @@
         <dependency>
             <groupId>com.redhat</groupId>
             <artifactId>atm-common</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-jpa</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -67,20 +73,12 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Example project -->
-        <dependency>
-            <groupId>se.lfv.swim.ed254</groupId>
-            <artifactId>ed254-message-producer</artifactId>
-            <version>0.2.2-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/ed254.jar</systemPath>
-        </dependency>
-
         <dependency>
             <groupId>org.jeasy</groupId>
             <artifactId>easy-random-core</artifactId>
             <version>4.0.0</version>
         </dependency>
+
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
@@ -144,12 +142,13 @@
                 <jkube.openshift.enrichAllWithImageChangeTrigger>true</jkube.openshift.enrichAllWithImageChangeTrigger>
             </properties>
             <build>
-                <finalName>${artifactId}</finalName>
+                <finalName>${project.artifactId}</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.eclipse.jkube</groupId>
                         <artifactId>openshift-maven-plugin</artifactId>
                         <version>1.13.1</version>
+<!--                        <version>1.16.2</version>-->
                         <executions>
                             <execution>
                                 <goals>

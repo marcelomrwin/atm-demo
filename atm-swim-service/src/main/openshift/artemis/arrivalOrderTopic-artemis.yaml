@@ -1,0 +1,22 @@
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemisAddress
+metadata:
+  name: arrival-order-topic
+  namespace: nav-portugal
+spec:
+  addressName: ARRIVAL_ORDER_TOPIC
+  applyToCrNames:
+    - artemis-swim
+  password: artemis
+  queueConfiguration:
+    autoCreateAddress: true
+    autoDelete: false
+    durable: true
+    enabled: true
+    ignoreIfExists: false
+    maxConsumers: -1
+    purgeOnNoConsumers: false
+  queueName: ARRIVAL_ORDER_TOPIC
+  removeFromBrokerOnDelete: true
+  routingType: multicast
+  user: artemis

@@ -21,11 +21,11 @@ public class ArrivalSequenceTopicConsumer {
     @JmsListener(destination = "${application.topic.name}", containerFactory = "listenerContainerFactoryTopic")
     public void consumeArrivalSequenceTopic(TextMessage message) {
         try {
-            log.debug("Consuming arrival sequence message ID {} from {}", message.getJMSCorrelationID(), message.getJMSDestination());
+            log.info("Consuming arrival sequence message ID {} from {}", message.getJMSCorrelationID(), message.getJMSDestination());
 
             JAXBContext context = JAXBContext.newInstance(ArrivalSequence.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-
+            //just to guarantee the message's integrity
             ArrivalSequence arrivalSequence = (ArrivalSequence) unmarshaller.unmarshal(new StringReader(message.getText()));
             arrivalSequenceService.splitMessageToSubscribers(message.getJMSCorrelationID(), arrivalSequence);
 

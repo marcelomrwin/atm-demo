@@ -21,7 +21,8 @@ public class ATMSWIMServiceApplication {
 
     @EventListener(ContextRefreshedEvent.class)
     public void onApplicationStartup(ContextRefreshedEvent event) {
-        log.info("Starting up...");
+        log.info("Starting {} on container {}",getClass().getName(),env.getProperty("HOSTNAME","localhost"));
+
 //TODO quando iniciar verificar se todos os tópicos/filas dos subscritores existem no amq broker, se não, recriar todos.
     }
 

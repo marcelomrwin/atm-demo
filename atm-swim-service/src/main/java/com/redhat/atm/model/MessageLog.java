@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,7 +17,14 @@ public class MessageLog {
     @Lob
     @Column(columnDefinition = "TEXT")
     private String payload;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "message_log_details", joinColumns = @JoinColumn(name = "message_id"))
     private Set<MessageLogDetail> messageLogDetails;
+
+    public Set<MessageLogDetail> getMessageLogDetails() {
+        if (messageLogDetails == null) {
+            messageLogDetails = new HashSet<>();
+        }
+        return messageLogDetails;
+    }
 }

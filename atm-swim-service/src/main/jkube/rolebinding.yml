@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: k8s-secret-update-role-binding
+subjects:
+  - kind: ServiceAccount
+    name: k8s-secret-update
+    namespace: nav-portugal
+roleRef:
+  kind: Role
+  name: k8s-secret-update-roles
+  apiGroup: rbac.authorization.k8s.io

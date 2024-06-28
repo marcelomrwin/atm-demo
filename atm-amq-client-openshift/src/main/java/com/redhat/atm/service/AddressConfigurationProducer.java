@@ -37,7 +37,7 @@ public class AddressConfigurationProducer {
         log.info("Updating the secret {} using Kubernetes API", secretName);
         CoreV1Api.APIreplaceNamespacedSecretRequest replaceRequest = coreV1Api.replaceNamespacedSecret(secretName, namespace, secret);
         ApiResponse<V1Secret> replaceResponse = replaceRequest.executeWithHttpInfo();
-        log.info("API Response Replace. Status: {}, Headers: {}, Data: {}", replaceResponse.getStatusCode(), replaceResponse.getHeaders(), replaceResponse.getData());
+        log.debug("API Response Replace. Status: {}, Headers: {}, Data: {}", replaceResponse.getStatusCode(), replaceResponse.getHeaders(), replaceResponse.getData());
         return secret;
     }
 }

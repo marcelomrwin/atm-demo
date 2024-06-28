@@ -6,11 +6,13 @@ import jakarta.jms.Topic;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.apache.activemq.artemis.jms.client.ActiveMQTopic;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
@@ -45,6 +47,9 @@ public class JmsConfiguration {
 
     @Value("${application.topic.ttl}")
     private Integer ttlMessage;
+
+    @Autowired
+    private Environment env;
 
 
     @Bean
@@ -83,6 +88,9 @@ public class JmsConfiguration {
         factory.setConcurrency("1-1");
         configurer.configure(factory, connectionFactory);
         factory.setPubSubDomain(true);
+        factory.setSubscriptionDurable(true);
+        String hostname = env.getProperty("HOSTNAME", "localhost");
+        factory.setClientId(hostname);
         return factory;
     }
 
@@ -123,7 +131,7 @@ public class JmsConfiguration {
 
     @Bean
     public Topic arrivalOrderTopic() {
-        return new ActiveMQTopic(Constants.ARRIVAL_ORDER_TOPIC);
+        return new ActiveMQTopic(Constants.ARRIVAL_ORDER_TOPIC,Constants.ARRIVAL_ORDER_TOPIC);
     }
 
 }

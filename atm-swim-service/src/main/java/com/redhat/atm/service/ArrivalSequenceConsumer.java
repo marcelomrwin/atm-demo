@@ -6,17 +6,19 @@ import jakarta.jms.JMSException;
 import jakarta.jms.TextMessage;
 import jakarta.jms.Topic;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.activemq.command.ActiveMQTextMessage;
+import org.apache.activemq.artemis.jms.client.ActiveMQTextMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.annotation.JmsListeners;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 @Slf4j
@@ -41,24 +43,36 @@ public class ArrivalSequenceConsumer {
     })
     public void consumeArrivalSequence(ActiveMQTextMessage message) {
         try {
-            log.debug("Received arrival sequence message from queue: {}\nMessage Id: {}\nCorrelation Id: {}\n{} ", message.getDestination().getPhysicalName(), message.getMessageId().toString(), message.getCorrelationId(), message.getText());
+            log.debug("Received arrival sequence message from queue: {}\nMessage Id: {}\nCorrelation Id: {}\n{} ", message.getJMSDestination(), message.getJMSMessageID(), message.getJMSCorrelationID(), message.getText());
 
             // outbox table pattern
             MessageLog messageLog = new MessageLog();
-            messageLog.setMessageId(message.getCorrelationId());
+            messageLog.setMessageId(message.getJMSCorrelationID());
             messageLog.setPayload(message.getText());
             messageLog.setCreatedAt(LocalDateTime.now(ZoneId.of(ZoneOffset.UTC.getId())));
             messageLogService.save(messageLog);
+            log.info("Calling redirectToTopic");
+            redirectToTopic(message);
+        } catch (JMSException e) {
+            log.error("An error occurred while trying to process the message", e);
+            throw new RuntimeException(e);
+        }
+    }
 
-            log.debug("Sending message {} to topic {}", message.getCorrelationId(),arrivalSequenceTopic.getTopicName());
+
+    @Async
+    protected CompletableFuture<Void> redirectToTopic(ActiveMQTextMessage message) {
+        try {
+            log.info("Sending message {} to topic {}", message.getJMSCorrelationID(), arrivalSequenceTopic.getTopicName());
             jmsTemplate.send(arrivalSequenceTopic, (session) -> {
                 TextMessage textMessage = session.createTextMessage(message.getText());
-                textMessage.setJMSCorrelationID(message.getCorrelationId());
+                textMessage.setJMSCorrelationID(message.getJMSCorrelationID());
                 return textMessage;
             });
         } catch (JMSException e) {
             log.error("An error occurred while trying to process the message", e);
             throw new RuntimeException(e);
         }
+        return CompletableFuture.completedFuture(null);
     }
 }
