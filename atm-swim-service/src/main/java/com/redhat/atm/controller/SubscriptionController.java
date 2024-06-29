@@ -2,6 +2,7 @@ package com.redhat.atm.controller;
 
 import com.redhat.atm.dto.SubscriptionRequest;
 import com.redhat.atm.dto.SubscriptionResponse;
+import com.redhat.atm.dto.TopicResponse;
 import com.redhat.atm.dto.UnSubscriptionRequest;
 import com.redhat.atm.model.Subscription;
 import com.redhat.atm.model.ed254.TopicType;
@@ -22,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Tag(
@@ -100,7 +103,13 @@ public class SubscriptionController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/user/topics")
-    public ResponseEntity<TopicType[]> listTopics() {
-        return ResponseEntity.ok(TopicType.values());
+    public ResponseEntity<List<TopicResponse>> listTopics() {
+        TopicType[] topicTypes = TopicType.values();
+
+        List<TopicResponse> responses = Arrays.stream(topicTypes).map(t -> {
+            return new TopicResponse(t.value(), t.value());
+        }).toList();
+
+        return ResponseEntity.ok(responses);
     }
 }

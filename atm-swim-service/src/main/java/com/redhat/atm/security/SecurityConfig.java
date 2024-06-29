@@ -25,6 +25,7 @@ public class SecurityConfig {
 
                         .requestMatchers(EndpointRequest.to("health")).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/subscription/v1/ping").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/subscription/v1/user/topics").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/subscription/v1/admin/**").hasRole(ADMIN)
                         .requestMatchers(HttpMethod.PUT, "/api/subscription/v1/admin/**").hasRole(ADMIN)
                         .requestMatchers(HttpMethod.POST,"/api/queue/management/v1/admin/**").hasRole(ADMIN)

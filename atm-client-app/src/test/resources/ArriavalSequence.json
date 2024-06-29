@@ -1,0 +1,376 @@
+{
+  "messageMeta": {
+    "creationTime": "2024-06-28T00:19:46",
+    "isFirstAfterOutage": false,
+    "managedAerodrome": "UUER",
+    "publicationTime": "2024-06-28T00:17:19"
+  },
+  "entry": [
+    {
+      "flightID": {
+        "arcid": "Z73N5A7",
+        "adep": "CVAH",
+        "ades": "KAKP",
+        "eobt": "2024-06-28T00:17:27"
+      },
+      "point": [
+        {
+          "aptto": "2024-06-28T00:14:21",
+          "pfl": "31B8R",
+          "ttl": 74,
+          "order": 2,
+          "pointName": "GVPDY",
+          "pointUsage": "STX"
+        }
+      ],
+      "assignedArrRwy": {
+        "name": "1O6"
+      },
+      "aircraft": {
+        "arctyp": "Fw-190",
+        "wktrc": "M"
+      },
+      "handling": {
+        "seqnr": 1,
+        "isLastRecord": false,
+        "isPriority": true
+      }
+    },
+    {
+      "flightID": {
+        "arcid": "8VP8F26",
+        "adep": "NVVY",
+        "ades": "PAJJ",
+        "eobt": "2024-06-28T00:19:46"
+      },
+      "point": [
+        {
+          "aptto": "2024-06-28T00:24:32",
+          "pfl": "C14O1",
+          "ttl": 66,
+          "order": 1,
+          "pointName": "QTYVJ",
+          "pointUsage": "FAF"
+        }
+      ],
+      "assignedArrRwy": {
+        "name": "C85"
+      },
+      "aircraft": {
+        "arctyp": "Spitfire",
+        "wktrc": "E"
+      },
+      "handling": {
+        "seqnr": 2,
+        "isLastRecord": false,
+        "isPriority": true
+      }
+    },
+    {
+      "flightID": {
+        "arcid": "533GEG8",
+        "adep": "LGCA",
+        "ades": "VCWB",
+        "eobt": "2024-06-28T00:21:27"
+      },
+      "point": [
+        {
+          "aptto": "2024-06-28T00:15:00",
+          "pfl": "3UK71",
+          "ttl": 8,
+          "order": 2,
+          "pointName": "DJDGP",
+          "pointUsage": "FAF"
+        }
+      ],
+      "assignedArrRwy": {
+        "name": "4D7"
+      },
+      "aircraft": {
+        "arctyp": "Be-12",
+        "wktrc": "H"
+      },
+      "handling": {
+        "seqnr": 3,
+        "isLastRecord": true,
+        "isPriority": false
+      }
+    },
+    {
+      "flightID": {
+        "arcid": "0Q883VM",
+        "adep": "EVIG",
+        "ades": "AOSX",
+        "eobt": "2024-06-28T00:23:15"
+      },
+      "point": [
+        {
+          "aptto": "2024-06-28T00:19:15",
+          "pfl": "X74I1",
+          "ttl": 42,
+          "order": 2,
+          "pointName": "BFYKB",
+          "pointUsage": "FAF"
+        }
+      ],
+      "assignedArrRwy": {
+        "name": "2M5"
+      },
+      "aircraft": {
+        "arctyp": "Saab JAS 39 Gripen",
+        "wktrc": "Q"
+      },
+      "handling": {
+        "seqnr": 4,
+        "isLastRecord": false,
+        "isPriority": false
+      }
+    },
+    {
+      "flightID": {
+        "arcid": "AH36O72",
+        "adep": "XCFA",
+        "ades": "BFYK",
+        "eobt": "2024-06-28T00:21:42"
+      },
+      "point": [
+        {
+          "aptto": "2024-06-28T00:25:19",
+          "pfl": "422MB",
+          "ttl": 88,
+          "order": 1,
+          "pointName": "DAEWJ",
+          "pointUsage": "FAF"
+        }
+      ],
+      "assignedArrRwy": {
+        "name": "47U"
+      },
+      "aircraft": {
+        "arctyp": "Ka-25",
+        "wktrc": "G"
+      },
+      "handling": {
+        "seqnr": 5,
+        "isLastRecord": false,
+        "isPriority": false
+      }
+    },
+    {
+      "flightID": {
+        "arcid": "588C8VW",
+        "adep": "YIXM",
+        "ades": "FUBF",
+        "eobt": "2024-06-28T00:13:27"
+      },
+      "point": [
+        {
+          "aptto": "2024-06-28T00:21:42",
+          "pfl": "VG641",
+          "ttl": 71,
+          "order": 2,
+          "pointName": "HVZBG",
+          "pointUsage": "FAF"
+        }
+      ],
+      "assignedArrRwy": {
+        "name": "8K7"
+      },
+      "aircraft": {
+        "arctyp": "MiG-9",
+        "wktrc": "J"
+      },
+      "handling": {
+        "seqnr": 6,
+        "isLastRecord": true,
+        "isPriority": false
+      }
+    },
+    {
+      "flightID": {
+        "arcid": "XYI1185",
+        "adep": "FUBF",
+        "ades": "EALT",
+        "eobt": "2024-06-28T00:23:30"
+      },
+      "point": [
+        {
+          "aptto": "2024-06-28T00:22:44",
+          "pfl": "6D35B",
+          "ttl": 70,
+          "order": 1,
+          "pointName": "RNCFQ",
+          "pointUsage": "FAF"
+        }
+      ],
+      "assignedArrRwy": {
+        "name": "G28"
+      },
+      "aircraft": {
+        "arctyp": "Su-32FN",
+        "wktrc": "F"
+      },
+      "handling": {
+        "seqnr": 7,
+        "isLastRecord": true,
+        "isPriority": true
+      }
+    },
+    {
+      "flightID": {
+        "arcid": "AK8K451",
+        "adep": "GPFR",
+        "ades": "HVZB",
+        "eobt": "2024-06-28T00:17:03"
+      },
+      "point": [
+        {
+          "aptto": "2024-06-28T00:18:05",
+          "pfl": "14OY6",
+          "ttl": 17,
+          "order": 1,
+          "pointName": "MMWMW",
+          "pointUsage": "FAF"
+        }
+      ],
+      "assignedArrRwy": {
+        "name": "K61"
+      },
+      "aircraft": {
+        "arctyp": "An-32",
+        "wktrc": "V"
+      },
+      "handling": {
+        "seqnr": 8,
+        "isLastRecord": true,
+        "isPriority": false
+      }
+    },
+    {
+      "flightID": {
+        "arcid": "424O7QF",
+        "adep": "NNLK",
+        "ades": "JOFP",
+        "eobt": "2024-06-28T00:22:13"
+      },
+      "point": [
+        {
+          "aptto": "2024-06-28T00:20:01",
+          "pfl": "1CV44",
+          "ttl": 50,
+          "order": 1,
+          "pointName": "FOQTU",
+          "pointUsage": "FAF"
+        }
+      ],
+      "assignedArrRwy": {
+        "name": "8L5"
+      },
+      "aircraft": {
+        "arctyp": "Be-12",
+        "wktrc": "H"
+      },
+      "handling": {
+        "seqnr": 9,
+        "isLastRecord": false,
+        "isPriority": false
+      }
+    }
+  ],
+  "topic": "ARRIVAL_SEQUENCE_DATA_C"
+}
+
+Para utilizar o JSON fornecido para montar o componente Timeline da biblioteca PrimeReact, você deve primeiro transformar os dados em um formato adequado para o Timeline. A ordem do Timeline será determinada pelo campo `seqnr` presente no objeto `handling`.
+
+Primeiro, você precisa ordenar os dados pela propriedade `seqnr` e então criar os itens do Timeline. Aqui está um exemplo de como você pode fazer isso:
+
+1. Ordenar os dados pela propriedade `seqnr`.
+2. Criar os itens do Timeline.
+
+Vamos fazer isso passo a passo:
+
+### 1. Ordenar os dados
+
+Para ordenar os dados, você pode usar o método `sort` do JavaScript.
+
+### 2. Criar os itens do Timeline
+
+Depois de ordenar os dados, você pode mapear cada entrada para um item do Timeline. Aqui está um exemplo de como fazer isso no React com PrimeReact.
+
+```jsx
+import React from 'react';
+import { Timeline } from 'primereact/timeline';
+import { Card } from 'primereact/card';
+
+const jsonData = {
+// JSON data provided by you
+};
+
+const sortedEntries = jsonData.entry.sort((a, b) => a.handling.seqnr - b.handling.seqnr);
+
+const timelineItems = sortedEntries.map((entry, index) => ({
+status: `Flight ID: ${entry.flightID.arcid}`,
+date: entry.flightID.eobt,
+icon: 'pi pi-plane',
+color: entry.handling.isPriority ? '#FF9800' : '#607D8B',
+content: (
+<Card title={`ADEP: ${entry.flightID.adep} - ADES: ${entry.flightID.ades}`} subTitle={`Seq Nr: ${entry.handling.seqnr}`}>
+<p>Point Name: {entry.point[0].pointName}</p>
+<p>Aircraft: {entry.aircraft.arctyp}</p>
+<p>Assigned Arr Rwy: {entry.assignedArrRwy.name}</p>
+</Card>
+),
+}));
+
+const MyTimeline = () => {
+return (
+<div>
+<h3>Flight Arrival Sequence</h3>
+<Timeline value={timelineItems} align="alternate" />
+</div>
+);
+};
+
+export default MyTimeline;
+```
+
+### Explicação do Código
+
+1. **Importações**:
+- Importa os componentes necessários do PrimeReact (`Timeline` e `Card`).
+
+2. **Ordenar os dados**:
+```javascript
+const sortedEntries = jsonData.entry.sort((a, b) => a.handling.seqnr - b.handling.seqnr);
+```
+
+3. **Criar os itens do Timeline**:
+```javascript
+const timelineItems = sortedEntries.map((entry, index) => ({
+status: `Flight ID: ${entry.flightID.arcid}`,
+date: entry.flightID.eobt,
+icon: 'pi pi-plane',
+color: entry.handling.isPriority ? '#FF9800' : '#607D8B',
+content: (
+<Card title={`ADEP: ${entry.flightID.adep} - ADES: ${entry.flightID.ades}`} subTitle={`Seq Nr: ${entry.handling.seqnr}`}>
+<p>Point Name: {entry.point[0].pointName}</p>
+<p>Aircraft: {entry.aircraft.arctyp}</p>
+<p>Assigned Arr Rwy: {entry.assignedArrRwy.name}</p>
+</Card>
+),
+}));
+```
+
+4. **Renderizar o componente Timeline**:
+```javascript
+const MyTimeline = () => {
+return (
+<div>
+<h3>Flight Arrival Sequence</h3>
+<Timeline value={timelineItems} align="alternate" />
+</div>
+);
+};
+```
+
+Este exemplo cria um Timeline onde cada item representa um voo, com detalhes adicionais como o ponto de origem e destino, o nome do ponto, a aeronave e a pista de chegada atribuída. O ícone e a cor são definidos com base na prioridade do voo.
