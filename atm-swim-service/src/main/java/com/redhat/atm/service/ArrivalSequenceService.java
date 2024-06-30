@@ -51,13 +51,7 @@ public class ArrivalSequenceService {
     public void splitMessageToSubscribers(String jmsCorrelationID, ArrivalSequence arrivalSequence) throws JAXBException {
         log.info("splitMessageToSubscribers called. Message Id: {}, arrivalSequence: {}", jmsCorrelationID, arrivalSequence.getTopic());
 
-        Subscription probe = new Subscription();
-        probe.setTopicsOfInterest(new ArrayList<>());
-        probe.getTopicsOfInterest().add(arrivalSequence.getTopic());
-        ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
-        Example<Subscription> example = Example.of(probe, matcher);
-
-        List<Subscription> subscriptions = subscriptionRepository.findAll(example, Sort.by(Sort.Order.asc("createdAt")));
+        List<Subscription> subscriptions = subscriptionRepository.findByTopicsOfInterestOrderByCreatedAt(arrivalSequence.getTopic());
         log.info("Total subscribers found: {}", subscriptions.size());
         for (Subscription subscription : subscriptions) {
             log.info("Send message to subscription: {} on Queue: {}", subscription.getSubscriptionId(), subscription.getResponseQueue());

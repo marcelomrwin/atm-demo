@@ -1,6 +1,7 @@
 package com.redhat.atm;
 
 import com.redhat.atm.model.ed254.ArrivalSequence;
+import com.redhat.atm.model.ed254.Entry;
 import com.redhat.atm.model.ed254.TopicType;
 import com.redhat.atm.repository.ArrivalSequenceRepository;
 import com.redhat.atm.service.ArrivalSequenceProducer;
@@ -38,15 +39,15 @@ public class ArrivalSequenceScheduledJob {
         });
     }
 
-
     @Async
     protected void runJob(TopicType topicType) {
         log.info("Running job for topic {}", topicType);
         arrivalSequenceRepository.getArrivalSequences().computeIfPresent(topicType, (key, asm) -> {
+
             ArrivalSequence arrivalSequence = asm.getArrivalSequence();
 
             if (random.nextBoolean()) {
-                log.info("Rotate Arrival Sequence for topic {}", topicType);
+                log.debug("Rotate Arrival Sequence for topic {}", topicType);
                 arrivalSequence = arrivalSequenceProducer.rotateArrivalSequence(topicType);
             }
 
@@ -61,6 +62,5 @@ public class ArrivalSequenceScheduledJob {
         });
 
     }
-
 
 }

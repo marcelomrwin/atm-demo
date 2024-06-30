@@ -48,6 +48,7 @@ public class ATMRootProducerApplication {
                 log.info("Finished generating the initial lists for topic {}", result.getTopic());
             }).join();
         });
+        log.info("Done generating the initial lists for each topic");
     }
 
 }

@@ -34,10 +34,9 @@ public class AppResource {
     @POST
     @Path("/callback")
     public Response callBack(ArrivalSequence arrivalSequence, @Context HttpHeaders headers, @QueryParam("correlationId") String correlationId) {
-        log.info("Callback called! ArrivalSequence: {}, CorrelationId: {}", arrivalSequence.toString(), correlationId);
+        log.debug("Callback called! ArrivalSequence: {}, CorrelationId: {}", arrivalSequence.toString(), correlationId);
 
         arrivalSequenceService.convertAndPublish(arrivalSequence);
-
         return Response.accepted().build();
     }
 

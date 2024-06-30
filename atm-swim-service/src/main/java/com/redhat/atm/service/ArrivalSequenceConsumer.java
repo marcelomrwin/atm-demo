@@ -16,7 +16,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.concurrent.CompletableFuture;
 
@@ -49,9 +48,9 @@ public class ArrivalSequenceConsumer {
             MessageLog messageLog = new MessageLog();
             messageLog.setMessageId(message.getJMSCorrelationID());
             messageLog.setPayload(message.getText());
-            messageLog.setCreatedAt(LocalDateTime.now(ZoneId.of(ZoneOffset.UTC.getId())));
+            messageLog.setCreatedAt(LocalDateTime.now(ZoneOffset.UTC));
             messageLogService.save(messageLog);
-            log.info("Calling redirectToTopic");
+            log.debug("Calling redirectToTopic");
             redirectToTopic(message);
         } catch (JMSException e) {
             log.error("An error occurred while trying to process the message", e);
@@ -61,9 +60,10 @@ public class ArrivalSequenceConsumer {
 
 
     @Async
-    protected CompletableFuture<Void> redirectToTopic(ActiveMQTextMessage message) {
+    protected void redirectToTopic(ActiveMQTextMessage message) {
         try {
             log.info("Sending message {} to topic {}", message.getJMSCorrelationID(), arrivalSequenceTopic.getTopicName());
+
             jmsTemplate.send(arrivalSequenceTopic, (session) -> {
                 TextMessage textMessage = session.createTextMessage(message.getText());
                 textMessage.setJMSCorrelationID(message.getJMSCorrelationID());
@@ -73,6 +73,6 @@ public class ArrivalSequenceConsumer {
             log.error("An error occurred while trying to process the message", e);
             throw new RuntimeException(e);
         }
-        return CompletableFuture.completedFuture(null);
+        CompletableFuture.completedFuture(null);
     }
 }

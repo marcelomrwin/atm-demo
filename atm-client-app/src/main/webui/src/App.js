@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 
 import {Avatar} from 'primereact/avatar';
 import {Toolbar} from 'primereact/toolbar';
@@ -9,6 +9,9 @@ import {PickList} from 'primereact/picklist';
 import {Button} from 'primereact/button';
 import {Timeline} from 'primereact/timeline';
 import {Card} from 'primereact/card';
+import { Toast } from 'primereact/toast';
+import { Tag } from 'primereact/tag';
+
 
 // import 'primereact/resources/themes/saga-blue/theme.css';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
@@ -27,6 +30,12 @@ function App() {
     const [connected, setConnected] = useState(false);
     const [events, setEvents] = useState([]);
     const [topic, setTopic] = useState([]);
+    const toast = useRef(null);
+
+    const showToast = (m) => {
+        toast.current.show({ severity: 'info', summary: 'Info', detail: m });
+    };
+
     const WS_URL = "ws://" + window.location.host + "/sse/";
 
     var ws = null;
@@ -65,8 +74,8 @@ function App() {
 
         ws.addEventListener("message", event => {
             console.log("Message from server ", event.data);
+            showToast("New Message from the Server");
             let arrivalList = JSON.parse(event.data);
-            console.log(arrivalList);
             setEvents(arrivalList.entries);
             setTopic(arrivalList.topic);
         });
@@ -160,6 +169,7 @@ function App() {
 
     return (
         <div className="App">
+            <Toast ref={toast} />
             <header className="App-header">
                 {!isAuthenticated() && <h2>You are not authenticated</h2>}
                 {
@@ -193,9 +203,12 @@ function App() {
                         <Card title={topic} subTitle="Arrival order of flights" header={cardHeader}
                               className="md:w-25rem">
 
-                            <Timeline value={events} opposite={(item) => item.arcid}
+                            <Timeline value={events} opposite={(item) => <div>
+                                <Tag severity="warning" value={item.arcid}></Tag>
+                                <Tag severity="info" value={item.seqnr}></Tag>
+                            </div>}
                                       content={(item) => <small
-                                          className="text-color-secondary">{item.eobt} {item.arctyp}</small>} align="alternate"/>
+                                          className="text-color-secondary">{item.eobt} {item.arctyp} </small>} align="alternate"/>
 
                         </Card>
 

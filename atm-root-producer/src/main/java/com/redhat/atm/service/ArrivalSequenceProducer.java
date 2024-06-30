@@ -5,6 +5,7 @@ import com.redhat.atm.model.EntryHandlingSeqComparator;
 import com.redhat.atm.model.*;
 import com.redhat.atm.model.ed254.*;
 import com.redhat.atm.repository.ArrivalSequenceRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
@@ -26,6 +27,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 @Component
+@Slf4j
 public class ArrivalSequenceProducer {
 
     private static final Faker faker = new Faker();
@@ -54,21 +56,25 @@ public class ArrivalSequenceProducer {
     }
 
     public ArrivalSequence rotateArrivalSequence(TopicType topicType) {
+        log.info("Rotating arrival sequence for {}", topicType);
         if (!arrivalSequenceRepository.getArrivalSequences().containsKey(topicType))
-            throw new RuntimeException("Key " + topicType + " not found");
+            throw new RuntimeException("Key " + topicType + " not found for rotate");
 
         ArrivalSequenceQueueModel asm = arrivalSequenceRepository.getArrivalSequences().get(topicType);
         Entry removedEntry = asm.getArrivalSequenceEntries().poll();
         Integer seqIndex = removedEntry.getHandling().getSeqnr().intValue();
         asm.getArrivalSequenceEntries().stream().forEachOrdered(entry -> entry.getHandling().setSeqnr(entry.getHandling().getSeqnr().subtract(BigInteger.valueOf(1))));
+        generateSequenceEntriesInformation(topicType, 1, asm.getArrivalSequenceEntries());
 
-        generateSequenceEntriesInformation(1, asm.getArrivalSequenceEntries());
+        asm.getArrivalSequence().getEntry().clear();
+        asm.getArrivalSequence().getEntry().addAll(asm.getArrivalSequenceEntries().stream().sorted(new EntryHandlingSeqComparator()).toList());
 
         return asm.getArrivalSequence();
     }
 
     private ArrivalSequenceQueueModel generateArrivalSequenceQueueModel(TopicType topicType) {
-        ArrivalSequenceQueueModel asm = ArrivalSequenceQueueModel.builder().maxArrivalSequence(faker.number().numberBetween(5, 10)).topic(topicType).build();
+        log.info("Generating arrival sequence Model for topic {}", topicType);
+        ArrivalSequenceQueueModel asm = ArrivalSequenceQueueModel.builder().maxArrivalSequence(faker.number().numberBetween(6, 11)).topic(topicType).build();
 
         ArrivalSequence arrivalSequence = new ArrivalSequence();
         arrivalSequence.setTopic(asm.getTopic());
@@ -80,15 +86,16 @@ public class ArrivalSequenceProducer {
         messageMeta.setManagedAerodrome(generateRandomString(4, true));
         arrivalSequence.setMessageMeta(messageMeta);
 
-        generateSequenceEntriesInformation(asm.getMaxArrivalSequence(), asm.getArrivalSequenceEntries());
+        generateSequenceEntriesInformation(topicType, asm.getMaxArrivalSequence(), asm.getArrivalSequenceEntries());
 
         arrivalSequence.getEntry().addAll(asm.getArrivalSequenceEntries());
         asm.setArrivalSequence(arrivalSequence);
-
+        log.debug("Arrival sequence model generated: {}", asm);
         return asm;
     }
 
-    private void generateSequenceEntriesInformation(int numberOfSequences, Queue<Entry> sequenceEntries) {
+    private void generateSequenceEntriesInformation(TopicType topicType, int numberOfSequences, Queue<Entry> sequenceEntries) {
+        log.info("Generating sequence Entries {} for topic {}", numberOfSequences, topicType);
         for (int i = 0; i < numberOfSequences; i++) {
             Entry entry = new Entry();
 
@@ -114,12 +121,13 @@ public class ArrivalSequenceProducer {
             handling.setIsPriority(faker.random().nextBoolean());
             handling.setIsLastRecord(faker.random().nextBoolean());
 
-            if (sequenceEntries.isEmpty())
+            if (sequenceEntries.isEmpty()) {
                 handling.setSeqnr(BigInteger.valueOf(1));
-            else {
+            } else {
                 Optional<BigInteger> maxSeq = sequenceEntries.stream().max(new EntryHandlingSeqComparator()).map((max) -> max.getHandling().getSeqnr());
                 handling.setSeqnr(maxSeq.get().add(BigInteger.valueOf(1)));
             }
+            log.info("Handling sequence is {}, for topic {}", handling.getSeqnr(), topicType);
             entry.setHandling(handling);
             sequenceEntries.add(entry);
         }

@@ -1,6 +1,6 @@
 # ATM Demo
 
-
+PRECISA INVESTIGAR PORQUE O CLIENTE ESTÁ RECEBENDO EVENTO DOS QUAIS NÃO SE INSCREVEU E SÓ ESTÁ CHEGANDO UM ITEM DA LISTA
 
 ## References
 * https://docs.redhat.com/en/documentation/red_hat_amq_broker/7.12

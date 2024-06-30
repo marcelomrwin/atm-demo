@@ -43,16 +43,15 @@ oc create secret generic atm-root-producer-secret \
 mvn clean package oc:resource -DskipTests -Popenshift
 ```
 
-### Deploy on Openshift
-```shell
-mvn clean package oc:build oc:resource oc:apply -Popenshift -DskipTests
-```
-
 ### Undeploy on Openshift
 ```shell
 mvn oc:undeploy -Popenshift
 ```
 
+### Deploy on Openshift
+```shell
+mvn clean package oc:build oc:resource oc:apply -Popenshift -DskipTests
+```
 
 ### Test Artemis
 ```shell

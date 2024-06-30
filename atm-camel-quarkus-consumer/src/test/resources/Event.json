@@ -1,0 +1,171 @@
+{
+  "messageMeta": {
+    "creationTime": 1719638661000,
+    "isFirstAfterOutage": true,
+    "managedAerodrome": "EUGI",
+    "publicationTime": 1719638785000
+  },
+  "entry": [
+    {
+      "flightID": {
+        "arcid": "I4N781H",
+        "adep": "NQJG",
+        "ades": "TXJM",
+        "eobt": 1719640186000
+      },
+      "point": [
+        {
+          "aptto": 1719638607000,
+          "pfl": "6F1P2",
+          "ttl": 64,
+          "order": 1,
+          "pointName": "HSLMG",
+          "pointUsage": "FAF"
+        }
+      ],
+      "atldt": null,
+      "assignedArrRwy": {
+        "name": "3P1"
+      },
+      "aircraft": {
+        "arctyp": "Tu-134",
+        "wktrc": "H"
+      },
+      "handling": {
+        "seqnr": 1,
+        "isLastRecord": false,
+        "isPriority": true,
+        "status": null
+      }
+    },
+    {
+      "flightID": {
+        "arcid": "MM6U588",
+        "adep": "CAJX",
+        "ades": "HEGL",
+        "eobt": 1719638785000
+      },
+      "point": [
+        {
+          "aptto": 1719640101000,
+          "pfl": "JF482",
+          "ttl": 4,
+          "order": 2,
+          "pointName": "EUGIE",
+          "pointUsage": "IAF"
+        }
+      ],
+      "atldt": null,
+      "assignedArrRwy": {
+        "name": "T57"
+      },
+      "aircraft": {
+        "arctyp": "Airbus 330",
+        "wktrc": "I"
+      },
+      "handling": {
+        "seqnr": 2,
+        "isLastRecord": false,
+        "isPriority": false,
+        "status": null
+      }
+    },
+    {
+      "flightID": {
+        "arcid": "3Y76UR0",
+        "adep": "HHSG",
+        "ades": "HSLM",
+        "eobt": 1719638762000
+      },
+      "point": [
+        {
+          "aptto": 1719640464000,
+          "pfl": "F770Y",
+          "ttl": 30,
+          "order": 1,
+          "pointName": "PZSOM",
+          "pointUsage": "STX"
+        }
+      ],
+      "atldt": null,
+      "assignedArrRwy": {
+        "name": "K66"
+      },
+      "aircraft": {
+        "arctyp": "Yak-152",
+        "wktrc": "W"
+      },
+      "handling": {
+        "seqnr": 3,
+        "isLastRecord": true,
+        "isPriority": false,
+        "status": null
+      }
+    },
+    {
+      "flightID": {
+        "arcid": "7J78KF6",
+        "adep": "JWNC",
+        "ades": "EIDI",
+        "eobt": 1719638762000
+      },
+      "point": [
+        {
+          "aptto": 1719640542000,
+          "pfl": "1R30C",
+          "ttl": 68,
+          "order": 2,
+          "pointName": "SOQFK",
+          "pointUsage": "STX"
+        }
+      ],
+      "atldt": null,
+      "assignedArrRwy": {
+        "name": "4R6"
+      },
+      "aircraft": {
+        "arctyp": "Su-30MKI",
+        "wktrc": "Q"
+      },
+      "handling": {
+        "seqnr": 4,
+        "isLastRecord": true,
+        "isPriority": true,
+        "status": null
+      }
+    },
+    {
+      "flightID": {
+        "arcid": "S7G03V6",
+        "adep": "RZZN",
+        "ades": "UMMK",
+        "eobt": 1719638669000
+      },
+      "point": [
+        {
+          "aptto": 1719639063000,
+          "pfl": "E58M8",
+          "ttl": 47,
+          "order": 1,
+          "pointName": "TIGUL",
+          "pointUsage": "FAF"
+        }
+      ],
+      "atldt": null,
+      "assignedArrRwy": {
+        "name": "6M1"
+      },
+      "aircraft": {
+        "arctyp": "Il-112",
+        "wktrc": "K"
+      },
+      "handling": {
+        "seqnr": 5,
+        "isLastRecord": true,
+        "isPriority": true,
+        "status": null
+      }
+    }
+  ],
+  "topic": "ARRIVAL_SEQUENCE_DATA_A"
+}

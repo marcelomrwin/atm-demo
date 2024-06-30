@@ -28,7 +28,7 @@ public class MessageExportRoute extends RouteBuilder {
         from("activemq:queue:{{amq.queue}}")
                 .id("activemq")
                 .unmarshal(jaxb)
-
+//                .log("Event arrived ${body}")
                 /*
 
                 .process((exchange) -> {
@@ -50,6 +50,7 @@ public class MessageExportRoute extends RouteBuilder {
                 .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.POST))
                 .setHeader(Exchange.HTTP_QUERY, simple("correlationId=${headers.JMSCorrelationID}"))
                 .process((exchange -> exchange.setProperty(Exchange.CHARSET_NAME, "UTF-8")))
+//                .log("Event Sent: ${body}")
                 .toD("{{application.callback.url}}")
         ;
     }
