@@ -1,7 +1,5 @@
 # ATM Demo
 
-PRECISA INVESTIGAR PORQUE O CLIENTE ESTÁ RECEBENDO EVENTO DOS QUAIS NÃO SE INSCREVEU E SÓ ESTÁ CHEGANDO UM ITEM DA LISTA
-
 ## References
 * https://docs.redhat.com/en/documentation/red_hat_amq_broker/7.12
 * https://docs.redhat.com/en/documentation/red_hat_amq_broker/7.12/html-single/deploying_amq_broker_on_openshift/index#proc-br-configuring-jaas-login-modules-for-authentication_broker-ocp

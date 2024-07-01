@@ -68,3 +68,18 @@ If you want to learn more about building native executables, please consult <htt
 podman build -f src/main/docker/Dockerfile.jvm -t quay.io/masales/atm-camel-quarkus:latest .
 podman run --rm --name atm-camel-quarkus --env AMQ_QUEUE=masales-queue --env AMQ_HOST=host.docker.internal --env AMQ_PORT=61616 --env AMQ_USER=artemis --env AMQ_PASSWORD=artemis --env CALL_BACK_URL=http://host.docker.internal:8088/api/callback quay.io/masales/atm-camel-quarkus:latest
 ```
+
+## Deploy Openshift
+```shell
+oc create secret generic atm-camel-quarkus-consumer-secret \
+    --from-literal=amq.host=artemis-swim-hdls-svc.nav-portugal.svc.cluster.local \
+    --from-literal=amq.port=61616 \
+    --from-literal=amq.user=marcelo \
+    --from-literal=amq.password=password \
+    --from-literal=callback.url=http://atm-client-app-nav-portugal.apps.ocp4.masales.cloud/api/callback \
+    --from-literal=amq.queue=6e0b5bbb-628e-4eac-a2d4-1fc63beab4b8
+```
+
+```shell
+./mvnw clean package -DskipTests -Popenshift
+```

@@ -9,8 +9,8 @@ import {PickList} from 'primereact/picklist';
 import {Button} from 'primereact/button';
 import {Timeline} from 'primereact/timeline';
 import {Card} from 'primereact/card';
-import { Toast } from 'primereact/toast';
-import { Tag } from 'primereact/tag';
+import {Toast} from 'primereact/toast';
+import {Tag} from 'primereact/tag';
 
 
 // import 'primereact/resources/themes/saga-blue/theme.css';
@@ -33,7 +33,7 @@ function App() {
     const toast = useRef(null);
 
     const showToast = (m) => {
-        toast.current.show({ severity: 'info', summary: 'Info', detail: m });
+        toast.current.show({severity: 'info', summary: 'Info', detail: m});
     };
 
     const WS_URL = "ws://" + window.location.host + "/sse/";
@@ -89,6 +89,7 @@ function App() {
     }
 
     const onChange = (event) => {
+        console.log(event + '|' + JSON.stringify(event.source) + '|' + JSON.stringify(event.target));
         setSource(event.source);
         setTarget(event.target);
     };
@@ -167,9 +168,37 @@ function App() {
         );
     };
 
+    const listSubs = () => {
+        fetch('/api/subscriptions')
+            .then(res => {
+                if (res.status === 200) {
+                    return res.json();
+                } else {
+                    console.log('No return');
+                    return null;
+                }
+            })
+            .then((data) => {
+
+                const newTarget = [];
+                data.forEach(item => {
+                    item.topicsOfInterest.forEach(topic => {
+                        newTarget.push(topic);
+                        const index = source.findIndex(item => item.id === topic.id);
+                        if (index > -1) {
+                            source.splice(index, 1);
+                        }
+                    })
+                })
+                setTarget(newTarget);
+                console.log(newTarget);
+            })
+            .catch(error => console.error('Error:', error))
+    }
+
     return (
         <div className="App">
-            <Toast ref={toast} />
+            <Toast ref={toast}/>
             <header className="App-header">
                 {!isAuthenticated() && <h2>You are not authenticated</h2>}
                 {
@@ -194,6 +223,7 @@ function App() {
                                   targetStyle={{height: '24rem'}}/>
                         <Divider/>
                         <Button label="Subscribe" icon="pi pi-check"/>
+                        <Button label="List" icon="pi pi-check" onClick={listSubs}/>
                     </div>
                 </SplitterPanel>
                 <SplitterPanel className="flex align-items-center justify-content-center">
@@ -208,7 +238,8 @@ function App() {
                                 <Tag severity="info" value={item.seqnr}></Tag>
                             </div>}
                                       content={(item) => <small
-                                          className="text-color-secondary">{item.eobt} {item.arctyp} </small>} align="alternate"/>
+                                          className="text-color-secondary">{item.eobt} {item.arctyp} </small>}
+                                      align="alternate"/>
 
                         </Card>
 

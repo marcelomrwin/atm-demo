@@ -16,4 +16,7 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, UUID
     @Query("SELECT s from Subscription s JOIN s.topicsOfInterest t WHERE t = :t order by s.createdAt")
     List<Subscription> findByTopicsOfInterestOrderByCreatedAt(@Param("t") TopicType t);
 
+    @Query("SELECT s from Subscription s JOIN s.topicsOfInterest WHERE s.subscriber = :subscriber")
+    List<Subscription> findBySubscriber(@Param("subscriber") String subscriber);
+
 }

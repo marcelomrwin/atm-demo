@@ -10,6 +10,7 @@ import jakarta.ws.rs.core.MediaType;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.reactive.NoCache;
 
 import java.util.Set;
@@ -19,6 +20,9 @@ import java.util.Set;
 public class UserResource {
     @Inject
     SecurityIdentity identity;
+
+//    @Inject
+//    JsonWebToken jwtPrincipal;
 
     @Inject
     @ConfigProperty(name = "quarkus.application.name")

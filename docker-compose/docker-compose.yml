@@ -22,7 +22,6 @@ services:
 
   artemis:
     image: registry.redhat.io/amq7/amq-broker-rhel8:7.12.0-9
-#    image: registry.redhat.io/amq7/amq-broker:7.7
     container_name: artemis
     ports:
       - 61616:61616

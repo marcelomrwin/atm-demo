@@ -1,0 +1,396 @@
+{
+	"info": {
+		"_postman_id": "af747e8f-2d64-4705-b3b2-38a87eb54801",
+		"name": "atm-demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12557199"
+	},
+	"item": [
+		{
+			"name": "Get Keycloak access Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.access_token);",
+							"postman.setEnvironmentVariable(\"refresh_token\", jsonData.refresh_token);",
+							"postman.setEnvironmentVariable(\"id_token\", jsonData.id_token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "marcelo",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/realms/{{realm}}/protocol/openid-connect/token",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"realms",
+						"{{realm}}",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://atm-swim-service-nav-portugal.apps.ocp4.masales.cloud/api/subscription/v1/ping",
+					"protocol": "http",
+					"host": [
+						"atm-swim-service-nav-portugal",
+						"apps",
+						"ocp4",
+						"masales",
+						"cloud"
+					],
+					"path": [
+						"api",
+						"subscription",
+						"v1",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subscribe",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"topicTypes\": [\n        \"ARRIVAL_SEQUENCE_DATA_A\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://atm-swim-service-nav-portugal.apps.ocp4.masales.cloud/api/subscription/v1/user/subscribe",
+					"protocol": "http",
+					"host": [
+						"atm-swim-service-nav-portugal",
+						"apps",
+						"ocp4",
+						"masales",
+						"cloud"
+					],
+					"path": [
+						"api",
+						"subscription",
+						"v1",
+						"user",
+						"subscribe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Message Logs",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://atm-swim-service-nav-portugal.apps.ocp4.masales.cloud/api/messagelog/v1/list",
+					"protocol": "http",
+					"host": [
+						"atm-swim-service-nav-portugal",
+						"apps",
+						"ocp4",
+						"masales",
+						"cloud"
+					],
+					"path": [
+						"api",
+						"messagelog",
+						"v1",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Subscriptions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://atm-swim-service-nav-portugal.apps.ocp4.masales.cloud/api/subscription/v1/admin/subscriptions",
+					"protocol": "http",
+					"host": [
+						"atm-swim-service-nav-portugal",
+						"apps",
+						"ocp4",
+						"masales",
+						"cloud"
+					],
+					"path": [
+						"api",
+						"subscription",
+						"v1",
+						"admin",
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Artemis Queues",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://atm-swim-service-nav-portugal.apps.ocp4.masales.cloud/api/queue/management/v1",
+					"protocol": "http",
+					"host": [
+						"atm-swim-service-nav-portugal",
+						"apps",
+						"ocp4",
+						"masales",
+						"cloud"
+					],
+					"path": [
+						"api",
+						"queue",
+						"management",
+						"v1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sync Queues",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://atm-swim-service-nav-portugal.apps.ocp4.masales.cloud/api/queue/management/v1/admin/sync",
+					"protocol": "http",
+					"host": [
+						"atm-swim-service-nav-portugal",
+						"apps",
+						"ocp4",
+						"masales",
+						"cloud"
+					],
+					"path": [
+						"api",
+						"queue",
+						"management",
+						"v1",
+						"admin",
+						"sync"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unsubscribe",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"subscriptionId\": \"f0f4941f-d54d-4b7e-9817-01984b783744\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://atm-swim-service-nav-portugal.apps.ocp4.masales.cloud/api/subscription/v1/user/unsubscribe",
+					"protocol": "http",
+					"host": [
+						"atm-swim-service-nav-portugal",
+						"apps",
+						"ocp4",
+						"masales",
+						"cloud"
+					],
+					"path": [
+						"api",
+						"subscription",
+						"v1",
+						"user",
+						"unsubscribe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Topics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://atm-swim-service-nav-portugal.apps.ocp4.masales.cloud/api/subscription/v1/user/topics",
+					"protocol": "http",
+					"host": [
+						"atm-swim-service-nav-portugal",
+						"apps",
+						"ocp4",
+						"masales",
+						"cloud"
+					],
+					"path": [
+						"api",
+						"subscription",
+						"v1",
+						"user",
+						"topics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Subscriptions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://atm-swim-service-nav-portugal.apps.ocp4.masales.cloud/api/subscription/v1/user/subscriptions",
+					"protocol": "http",
+					"host": [
+						"atm-swim-service-nav-portugal",
+						"apps",
+						"ocp4",
+						"masales",
+						"cloud"
+					],
+					"path": [
+						"api",
+						"subscription",
+						"v1",
+						"user",
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

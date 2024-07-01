@@ -102,6 +102,18 @@ public class SubscriptionController {
         return ResponseEntity.ok(allSubscriptions);
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/user/subscriptions", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> getSubscriptionsForUser(@AuthenticationPrincipal Jwt jwt) {
+        log.info("Get subscriptions for user {}", jwt.getClaimAsString("preferred_username"));
+
+        List<Subscription> allSubscriptions = subscriptionService.getAllSubscriptionsForUser(jwt.getClaimAsString("preferred_username"));
+        if (allSubscriptions.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(allSubscriptions);
+    }
+
     @RequestMapping(method = RequestMethod.GET, path = "/user/topics")
     public ResponseEntity<List<TopicResponse>> listTopics() {
         TopicType[] topicTypes = TopicType.values();

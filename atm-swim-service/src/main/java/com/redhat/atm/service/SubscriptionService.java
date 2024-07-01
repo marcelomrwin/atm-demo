@@ -60,6 +60,11 @@ public class SubscriptionService {
         return subscriptionRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public List<Subscription> getAllSubscriptionsForUser(String subscriber) {
+        return subscriptionRepository.findBySubscriber(subscriber);
+    }
+
     @Transactional
     public void unsubscribe(Subscription subscription) throws Exception {
         subscriptionRepository.delete(subscription);
