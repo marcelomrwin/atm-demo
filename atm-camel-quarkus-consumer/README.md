@@ -83,3 +83,7 @@ oc create secret generic atm-camel-quarkus-consumer-secret \
 ```shell
 ./mvnw clean package -DskipTests -Popenshift
 ```
+
+```shell
+podman build -f src/main/docker/Dockerfile.multistage -t quay.io/masales/atm-camel-quarkus-native:latest .
+```

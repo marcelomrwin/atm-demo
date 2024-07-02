@@ -160,6 +160,7 @@
                 <skipTests>true</skipTests>
             </properties>
         </profile>
+
         <profile>
             <id>native</id>
             <activation>
@@ -171,6 +172,23 @@
                 <skipITs>false</skipITs>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>${quarkus.platform.group-id}</groupId>
+                        <artifactId>quarkus-maven-plugin</artifactId>
+                        <version>${quarkus.platform.version}</version>
+                        <!--
+                        <configuration>
+                            <systemProperties>
+                                <quarkus.native.container-build>true</quarkus.native.container-build>
+                                <quarkus.native.builder-image>graalvm</quarkus.native.builder-image>
+                            </systemProperties>
+                        </configuration>
+                        -->
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>
