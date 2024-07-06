@@ -88,6 +88,97 @@ sequenceDiagram
     deactivate B
 ```
 
+### AMQ Connection Flow
+```mermaid
+sequenceDiagram
+    actor A as ATMPartner
+    participant AMQ
+    participant Keycloak
+
+    A->>AMQ: Connect with Credentials and URL and PORT
+    Note right of A: Credentials received in Registration flow
+    Note right of A: URL and PORT received in Subscription flow
+    activate AMQ
+
+    AMQ->>Keycloak: Validate credentials and obtain long-term JWT token
+    activate Keycloak
+    Keycloak-->>AMQ: Return JWT token
+    deactivate Keycloak
+
+    AMQ->>Keycloak: Check roles associated with ATMPartner
+    Keycloak-->>AMQ: Return roles and permissions
+
+    AMQ->>AMQ: Validate permissions for each Queue
+
+    AMQ-->>A: Confirm connection
+
+    Note right of AMQ: Ready to notify ATMPartner of new messages
+    deactivate AMQ
+```
+
+### Message consumption flow
+```mermaid
+sequenceDiagram
+    participant ATMLegacy
+    participant ATM
+    participant Database as ATM Database
+    participant AMQ as Message Middleware (AMQ)
+    actor A as ATMPartner
+
+    ATMLegacy->>ATM: Notify of new messages in internal queues
+    activate ATM
+
+    ATM->>ATM: Validate topic name and check active subscriptions
+    ATM->>Database: Query subscriptions for the received topic
+    activate Database
+    Database-->>ATM: Return active subscriptions
+    deactivate Database
+
+    loop For each active subscription
+        ATM->>AMQ: Send message to corresponding queue
+    end
+
+    AMQ-->>A: Notify ATMPartner of new message
+
+    deactivate ATM
+```
+
+Alternatively, the project presents a flow where ATMPartner does not connect directly to AMQ but receives notifications through a REST endpoint in JSON format. This scenario is useful in situations where ATMPartner cannot be changed or has technological or AMQ access limitations.
+
+```mermaid
+sequenceDiagram
+    participant ATMLegacy
+    participant ATM
+    participant Database as ATM Database
+    participant AMQ as Message Middleware (AMQ)
+    participant Camel as Quarkus Camel Route
+    actor A as ATMPartner
+
+    ATMLegacy->>ATM: Notify of new messages in internal queues
+    activate ATM
+
+    ATM->>ATM: Validate topic name and check active subscriptions
+    ATM->>Database: Query subscriptions for the received topic
+    activate Database
+    Database-->>ATM: Return active subscriptions
+    deactivate Database
+
+    loop For each active subscription
+        ATM->>AMQ: Send message to corresponding queue
+    end
+
+    AMQ-->>Camel: Notify Camel Route of new message
+    activate Camel
+    Camel->>Camel: Converts the message to JSON
+
+    Camel-->>A: Send the message via REST endpoint
+    deactivate Camel
+    Note over Camel: Optionally, the camel route can transform the data and send only the fields of interest to ATMPartner
+    Note right of Camel: The service can be protected by a JWT token validated by Keycloak. In this case, Quarkus Camel Route would obtain a long-lived token and send it to ATMPartner for validation.
+
+    deactivate ATM
+```
+
 ## Build Native Camel Quarkus
 ```shell
 podman build -f docker-images/Dockerfile-camel-quarkus.multistage -t quay.io/masales/atm-camel-quarkus-native:latest .
