@@ -30,20 +30,62 @@ Additionally, ATM presents other challenges such as:
 
 ```mermaid
 sequenceDiagram
-    actor A as Institution
-    actor B as Credential Management Entity
+    actor A as ATMPartner
+    actor B as ATM
 
     A->>B: Registration Request (essential data)
     activate B
-    B->>Keycloak: Register Institution (essential data)
+    B->>Keycloak: Register ATMPartner (essential data)
     activate Keycloak
-    Keycloak-->>B: Registration Confirmation (user created, credentials, role)
+    Keycloak-->>Keycloak: Generates credentials and role
+    Keycloak-->>B: Registration Confirmation (user created, credentials)
+    B-->>Keycloak: Assigns profiles and roles to the partner
     deactivate Keycloak
 
     B-->>A: Registration Notification (credentials and role)
     deactivate B
 
-    Note over B: Role created for A is important for future use
+    Note over Keycloak: Role created for A is important for future use
+```
+
+### Subscription Flow Sequence Diagram
+```mermaid
+sequenceDiagram
+    actor A as ATMPartner
+    participant B as ATM
+    participant Keycloak
+    participant Database as ATM Database
+    participant AMQ
+
+    A->>Keycloak: Authenticate and obtain JWT token
+    activate Keycloak
+    Keycloak-->>A: Return JWT token
+    deactivate Keycloak
+
+    A->>B: Subscribe service request (JWT token, list of ATMTopics)
+    activate B
+
+    B->>Keycloak: Validate authentication and authorization (JWT token)
+    activate Keycloak
+    Keycloak-->>B: Validation result
+    deactivate Keycloak
+
+    B->>Database: Create Subscription
+    activate Database
+    Database-->>B: Subscription created
+    deactivate Database
+
+    B->>AMQ: Create message Queue
+    activate AMQ
+    AMQ-->>B: Message Queue created
+    deactivate AMQ
+
+    B->>AMQ: Configure Queue Security for ATMPartner
+    AMQ-->>B: Queue Security configured
+
+    B-->>A: Response (Subscription ID, AMQ URL, AMQ port, Queue name, expiration date)
+    deactivate B
+
 ```
 
 ## Build Native Camel Quarkus
