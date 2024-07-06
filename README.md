@@ -81,11 +81,11 @@ sequenceDiagram
     deactivate AMQ
 
     B->>AMQ: Configure Queue Security for ATMPartner
+    Note over AMQ: The role created in Keycloak will be the role that will be allowed to consume this queue
     AMQ-->>B: Queue Security configured
 
     B-->>A: Response (Subscription ID, AMQ URL, AMQ port, Queue name, expiration date)
     deactivate B
-
 ```
 
 ## Build Native Camel Quarkus
