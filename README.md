@@ -179,6 +179,35 @@ sequenceDiagram
     deactivate ATM
 ```
 
+## Technologies used
+* [Red Hat Openshift](https://www.redhat.com/en/technologies/cloud-computing/openshift) 
+* [Red Hat Application Foundations](https://www.redhat.com/en/products/application-foundations)
+  * [Red Hat Build of Keycloak](https://access.redhat.com/products/red-hat-build-of-keycloak)
+  * [Red Hat AMQ](https://www.redhat.com/en/technologies/jboss-middleware/amq)
+  * [Red Hat Build of Quarkus](https://access.redhat.com/products/quarkus)
+  * [Red Hat Build of Apache Camel](https://access.redhat.com/documentation/en-us/red_hat_build_of_apache_camel)
+  * [Red Hat support for Spring Boot](https://docs.redhat.com/en/documentation/red_hat_support_for_spring_boot/)
+* [Postgres Database](https://www.postgresql.org/)
+* [React for frontend](https://react.dev/)
+* [Primereact](https://primereact.org/)
+
+## Suggested Trainnings
+* [Red Hat Agile Integration Technical Overview | DO040 **FREE**](https://www.redhat.com/en/services/training/do040-red-hat-agile-integration-technical-overview)
+* [Running Containers with Red Hat Technical Overview | RH065 **FREE**](https://www.redhat.com/en/services/training/rh065-running-containers-red-hat-technical-overview)
+* [Containers, Kubernetes and Red Hat OpenShift Technical Overview | DO080 **FREE**](https://www.redhat.com/en/services/training/do080-deploying-containerized-applications-technical-overview)
+* [Developing Cloud-Native Applications with Microservices Architectures | DO092 **FREE**](https://www.redhat.com/en/services/training/do092-developing-cloud-native-applications-microservices-architectures)
+* [Introduction to OpenShift Applications | DO101](https://www.redhat.com/en/services/training/do101-introduction-openshift-applications)
+* [Red Hat OpenShift Development I: Introduction to Containers with Podman | DO188](https://www.redhat.com/en/services/training/do188-red-hat-open-shift-development-introduction-containers-with-podman)
+* [Red Hat OpenShift Developer II: Building and Deploying Cloud-native Applications | DO288](https://www.redhat.com/en/services/training/red-hat-openshift-developer-ii-building-and-deploying-cloud-native-applications)
+* [Red Hat Single Sign-On Administration | DO313](https://www.redhat.com/en/services/training/do313-red-hat-single-sign-on-administration)
+* [Red Hat DevOps Pipelines and Processes: CI/CD with Jenkins, Git, and Test Driven Development | DO400](https://www.redhat.com/en/services/training/do400-red-hat-devops-pipelines-and-processes-with-jenkins-git-and-test-driven-development)
+* [Cloud-native Integration with Red Hat Fuse and Apache Camel | AD221](https://www.redhat.com/en/services/training/ad221-cloud-native-integration-with-red-hat-fuse)
+* [Red Hat Cloud-native Microservices Development with Quarkus | DO378](https://www.redhat.com/en/services/training/red-hat-cloud-native-microservices-development-quarkus-do378)
+
+## Solution Overview
+![HLD](docs/hld.png)
+
+
 ## Build Native Camel Quarkus
 ```shell
 podman build -f docker-images/Dockerfile-camel-quarkus.multistage -t quay.io/masales/atm-camel-quarkus-native:latest .
@@ -195,6 +224,8 @@ podman build -f docker-images/Dockerfile-camel-quarkus.multistage -t quay.io/mas
 * https://eur-registry.swim.aero/services/eurocae-arrival-sequence-service-102/arrival-sequence-service-performance-standard
 * https://www.eurocontrol.int/publication/eurocontrol-specification-swim-service-description-sd
 * https://sparxsystems.com/products/ea/downloads.html
-* https://medium.com/javarevisited/keycloak-integration-with-spring-security-6-37999f43ec85
+* https://developers.redhat.com/articles/2023/07/24/how-integrate-spring-boot-3-spring-security-and-keycloak
+* https://developers.redhat.com/articles/2024/02/12/getting-started-red-hat-build-keycloak-22
+* https://developers.redhat.com/blog/2020/08/24/java-development-on-top-of-kubernetes-using-eclipse-jkube
 * https://quarkus.io/guides/security-openid-connect-client
 * https://quarkus.io/guides/deploying-to-openshift#log-into-the-openshift-cluster
