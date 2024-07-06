@@ -207,6 +207,18 @@ sequenceDiagram
 ## Solution Overview
 ![HLD](docs/hld.png)
 
+## Solution Components
+![HLD Components](docs/hld-comps.png)
+
+## Screenshots
+Login screen with Keycloak
+![Login screen Keycloak](docs/img01.png)
+
+Event screen
+![Events screen](docs/img02.png)
+
+Event notifications (Websocket)
+![Event notification websocket](docs/img03.png)
 
 ## Build Native Camel Quarkus
 ```shell

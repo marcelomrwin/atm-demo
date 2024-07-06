@@ -4,4 +4,4 @@ node_modules
 target
 docker-compose
 postman-collections
-HLD.excalidraw
+docs/HLD.excalidraw
