@@ -1,5 +1,28 @@
 # ATM Demo
 
+
+## Sample flows
+
+### Registration Flow Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    actor A as Institution
+    actor B as Credential Management Entity
+
+    A->>B: Registration Request (essential data)
+    activate B
+    B->>Keycloak: Register Institution (essential data)
+    activate Keycloak
+    Keycloak-->>B: Registration Confirmation (user created, credentials, role)
+    deactivate Keycloak
+
+    B-->>A: Registration Notification (credentials and role)
+    deactivate B
+
+    Note over B: Role created for A is important for future use
+```
+
 ## Build Native Camel Quarkus
 ```shell
 podman build -f docker-images/Dockerfile-camel-quarkus.multistage -t quay.io/masales/atm-camel-quarkus-native:latest .

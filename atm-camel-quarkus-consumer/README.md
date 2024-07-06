@@ -80,6 +80,17 @@ oc create secret generic atm-camel-quarkus-consumer-secret \
     --from-literal=amq.queue=6e0b5bbb-628e-4eac-a2d4-1fc63beab4b8
 ```
 
+### Deploy to Openshift second instance - No access allowed
+```shell
+oc create secret generic atm-camel-quarkus-manuel-secret \
+    --from-literal=amq.host=artemis-swim-hdls-svc.nav-portugal.svc.cluster.local \
+    --from-literal=amq.port=61616 \
+    --from-literal=amq.user=manuel \
+    --from-literal=amq.password=password \
+    --from-literal=callback.url=http://atm-client-app-nav-portugal.apps.ocp4.masales.cloud/api/callback \
+    --from-literal=amq.queue=6e0b5bbb-628e-4eac-a2d4-1fc63beab4b8
+```
+
 ```shell
 ./mvnw clean package -DskipTests -Popenshift
 ```
